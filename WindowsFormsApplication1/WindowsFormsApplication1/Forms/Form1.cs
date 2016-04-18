@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
+using WindowsFormsApplication1.Forms;
+using WindowsFormsApplication1.Util;
 
 namespace WindowsFormsApplication1
 {
@@ -239,48 +238,39 @@ namespace WindowsFormsApplication1
         private void tallozButton_Click(object sender, EventArgs e)
         {
             doneLabel.Visible = false;
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.InitialDirectory = @"D:\NC\";
-            ofd.Filter = "Mpf fájlok (*.mpf)|*.mpf";
-            if (ofd.ShowDialog() == DialogResult.OK)
+            OpenFileDialog tallozDialog = MPFOpenFileDialogCreator.createDialog();
+            if (tallozDialog.ShowDialog() == DialogResult.OK)
             {
-                mitTextBox.Text = ofd.FileName;
-                hovaTextBox.Text = @"D:\NCT\" + Path.GetFileNameWithoutExtension(ofd.FileName) + ".nct";
+                mitTextBox.Text = tallozDialog.FileName;
+                hovaTextBox.Text = @"D:\NCT\" + Path.GetFileNameWithoutExtension(tallozDialog.FileName) + ".nct";
             }
         }
 
         private void networkFolderBrowseButton_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.Description = "Válassz célmappát:";
+            FolderBrowserDialog networkFolderBrowserDialog = new FolderBrowserDialog();
+            networkFolderBrowserDialog.Description = "Válassz célmappát:";
             string baseSelectedPath = getNetworkConfigForSelectedNetwork().BaseTargetFolder;
             try
             {
-                fbd.SelectedPath = FolderUtil.getFirstChildFolderIfExist(baseSelectedPath);
+                networkFolderBrowserDialog.SelectedPath = FolderUtil.getFirstChildFolderIfExist(baseSelectedPath);
             }
             catch (DirectoryNotFoundException)
             {
                 MessageBox.Show("A megadott hálózati elérési útvonal nem létezik.", "Érvénytelen útvonal", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            if (fbd.ShowDialog() == DialogResult.OK)
+            if (networkFolderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                int startCharacterIndexOfFolder = fbd.SelectedPath.LastIndexOf(baseSelectedPath) + baseSelectedPath.Length;
-                string targetFolderText = Path.GetDirectoryName(fbd.SelectedPath + "\\").Substring(startCharacterIndexOfFolder);
+                int startCharacterIndexOfFolder = networkFolderBrowserDialog.SelectedPath.LastIndexOf(baseSelectedPath) + baseSelectedPath.Length;
+                string targetFolderText = Path.GetDirectoryName(networkFolderBrowserDialog.SelectedPath + "\\").Substring(startCharacterIndexOfFolder);
                 getNetworkConfigForSelectedNetwork().TargetFolder.Text = targetFolderText;
             }
         }
 
         private void openLogFileButton_Click(object sender, EventArgs e)
         {
-            if (File.Exists(Logger.getLogFilePath()))
-            {
-                Process.Start(Logger.getLogFilePath());
-            }
-            else
-            {
-                MessageBox.Show("A naplófájl nem található.");
-            }
+            FileOpener.openLogFile();
         }
 
         private NetworkMachineConfiguration getNetworkConfigForSelectedNetwork()
