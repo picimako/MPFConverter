@@ -5,7 +5,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
-namespace WindowsFormsApplication1
+namespace MPFConverterApp
 {
     class Converter
     {

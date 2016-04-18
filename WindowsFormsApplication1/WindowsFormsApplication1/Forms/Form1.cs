@@ -4,11 +4,10 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.IO;
-using System.Diagnostics;
-using WindowsFormsApplication1.Forms;
-using WindowsFormsApplication1.Util;
+using MPFConverterApp.Forms;
+using MPFConverterApp.Util;
 
-namespace WindowsFormsApplication1
+namespace MPFConverterApp
 {
     public partial class Form1 : Form
     {

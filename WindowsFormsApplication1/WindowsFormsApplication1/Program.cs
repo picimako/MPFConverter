@@ -4,7 +4,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.IO;
 
-namespace WindowsFormsApplication1
+namespace MPFConverterApp
 {
     static class Program
     {

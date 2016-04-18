@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication1
+namespace MPFConverterApp
 {
     class FileCopier
     {

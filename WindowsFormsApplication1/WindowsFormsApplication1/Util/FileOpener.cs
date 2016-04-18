@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
-namespace WindowsFormsApplication1.Util
+namespace MPFConverterApp.Util
 {
     class FileOpener
     {

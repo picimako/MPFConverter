@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace WindowsFormsApplication1
+namespace MPFConverterApp
 {
     class Logger
     {

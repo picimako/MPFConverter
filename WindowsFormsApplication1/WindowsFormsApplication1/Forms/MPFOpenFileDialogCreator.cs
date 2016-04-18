@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace WindowsFormsApplication1.Forms
+namespace MPFConverterApp.Forms
 {
     class MPFOpenFileDialogCreator
     {

@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApplication1
+﻿namespace MPFConverterApp
 {
     partial class Form1
     {
