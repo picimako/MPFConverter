@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using System.IO;
-using System.Windows.Forms;
+using static System.Windows.Forms.MessageBox;
 
 namespace MPFConverterApp.Util
 {
@@ -14,7 +14,7 @@ namespace MPFConverterApp.Util
             }
             else
             {
-                MessageBox.Show("A naplófájl nem található.");
+                Show("A naplófájl nem található.");
             }
         }
     }

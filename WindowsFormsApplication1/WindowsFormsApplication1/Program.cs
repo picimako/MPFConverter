@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.IO;
+using static System.Windows.Forms.MessageBox;
 
 namespace MPFConverterApp
 {
@@ -36,12 +37,12 @@ namespace MPFConverterApp
             }
             catch (FileNotFoundException fnfe)
             {
-                MessageBox.Show(String.Format("A settings.txt nem található a következő helyen:\n{0}", fnfe.FileName));
+                Show(String.Format("A settings.txt nem található a következő helyen:\n{0}", fnfe.FileName));
                 return;
             }
             catch (IOException ioe)
             {
-                MessageBox.Show(String.Format("Hiba történt a settings.txt beolvasása közben.\n\n{0}", ioe.StackTrace));
+                Show(String.Format("Hiba történt a settings.txt beolvasása közben.\n\n{0}", ioe.StackTrace));
                 return;
             }
 

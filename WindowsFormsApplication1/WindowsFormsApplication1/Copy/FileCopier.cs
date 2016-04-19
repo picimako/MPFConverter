@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Windows.Forms;
+using static System.Windows.Forms.MessageBox;
 
 namespace MPFConverterApp
 {
@@ -9,7 +10,7 @@ namespace MPFConverterApp
         {
             if (!Directory.Exists(networkTargetFolder))
             {
-                MessageBox.Show("A hálózaton levő mappa nem létezik vagy a számítógép nem elérhető!");
+                Show("A hálózaton levő mappa nem létezik vagy a számítógép nem elérhető!");
                 return;
             }
             string finalNetworkTarget = networkTargetFolder + "\\" + Path.GetFileName(newNctFile);
@@ -17,7 +18,7 @@ namespace MPFConverterApp
 
             if (File.Exists(finalNetworkTarget))
             {
-                DialogResult result = MessageBox.Show("A fájl már létezik a célhelyen. Felül szeretnéd írni?", "Értesítés.", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                DialogResult result = Show("A fájl már létezik a célhelyen. Felül szeretnéd írni?", "Értesítés.", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
                 if (result == DialogResult.Yes)
                 {
                     File.Delete(finalNetworkTarget);
