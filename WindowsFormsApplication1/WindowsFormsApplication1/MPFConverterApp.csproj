@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\NetworkMachineConfiguration.cs" />
+    <Compile Include="Forms\NetworkFormControlFactory.cs" />
     <Compile Include="Util\ControlUtil.cs" />
     <Compile Include="Copy\FileCopier.cs" />
     <Compile Include="Util\FolderUtil.cs" />
@@ -73,7 +74,7 @@
     <Compile Include="Forms\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\MPFOpenFileDialogCreator.cs" />
+    <Compile Include="Forms\MPFOpenFileDialogFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\Settings.cs" />

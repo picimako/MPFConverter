@@ -50,20 +50,17 @@ namespace MPFConverterApp
 
         private void setNetworkMachines()
         {
-            int radioX = 13, radioY = 17, radioYDiff = 32;
-            int baseTargetFolderX = 130, baseTargetFolderY = 33, baseTargetFolderDiff = 33;
-            int targetFolderX = 293, targetFolderY = 33, targetFolderDiff = 33;
-            for (int i = 0; i < Settings.settings.MachineBaseTargetFolders.Count; i++)
+            NetworkFormControlFactory factory = new NetworkFormControlFactory();
+
+            for (int currentFolder = 0; currentFolder < Settings.settings.MachineBaseTargetFolders.Count; currentFolder++)
             {
                 
-                RadioButton radioButton = new RadioButton();
-                radioButton.Location = new Point(radioX, radioY + i * radioYDiff);
-                radioButton.Text = Settings.settings.MachineBaseTargetFolders[i].Key;
+                RadioButton radioButton = factory.CreateRadioButtonFor(currentFolder);
                 radioButton.CheckedChanged += delegate(object sender, EventArgs e)
                 {
                     getTargetFolderForRadioButton(radioButton).Enabled = radioButton.Checked;
                     
-                    /*A CheckedChange kétszer fut le. Először arra a RadioButton-re, amiből ki lett szedve a pötty,
+                    /*A CheckedChanged kétszer fut le. Először arra a RadioButton-re, amiből ki lett szedve a pötty,
                     * majd utána arra, amelyikbe be lett téve a pötty.*/
                     if (radioButton.Checked)
                     {
@@ -76,27 +73,21 @@ namespace MPFConverterApp
                     }
                 };
 
-                TextBox baseTargetFolder = new TextBox();
-                baseTargetFolder.Size = new Size(157, 20);
-                baseTargetFolder.Location = new Point(baseTargetFolderX, baseTargetFolderY + i * baseTargetFolderDiff);
-                baseTargetFolder.Text = Settings.settings.MachineBaseTargetFolders[i].Value;
-                baseTargetFolder.Enabled = false;
+                TextBox baseTargetFolder = factory.CreateBaseTargetFolderTextBoxFor(currentFolder);
 
-                TextBox targetFolder = new TextBox();
-                targetFolder.Size = new Size(100, 20);
-                targetFolder.Location = new Point(targetFolderX, targetFolderY + i * targetFolderDiff);
+                TextBox targetFolder = factory.CreateTargetFolderTextBoxFor(currentFolder);
                 targetFolder.TextChanged += delegate(object sender, EventArgs e)
                 {
                     getNCTConfigForSelectedNetwork().NetworkTargetFolder = getNetworkConfigForSelectedNetwork().BaseTargetFolder +
                         getNetworkConfigForSelectedNetwork().TargetFolder.Text;
                 };
 
-                if (i > 0)
+                if (currentFolder > 0)
                 {
                     targetFolder.Enabled = false;
                 }
 
-                if (i > 1)
+                if (currentFolder > 1)
                 {
                     this.Height += 37;
                     groupBox1.Height += 37;
@@ -237,7 +228,7 @@ namespace MPFConverterApp
         private void tallozButton_Click(object sender, EventArgs e)
         {
             doneLabel.Visible = false;
-            OpenFileDialog tallozDialog = MPFOpenFileDialogCreator.createDialog();
+            OpenFileDialog tallozDialog = MPFOpenFileDialogFactory.CreateDialog();
             if (tallozDialog.ShowDialog() == DialogResult.OK)
             {
                 mitTextBox.Text = tallozDialog.FileName;
@@ -269,7 +260,7 @@ namespace MPFConverterApp
 
         private void openLogFileButton_Click(object sender, EventArgs e)
         {
-            FileOpener.openLogFile();
+            FileOpener.OpenLogFile();
         }
 
         private NetworkMachineConfiguration getNetworkConfigForSelectedNetwork()

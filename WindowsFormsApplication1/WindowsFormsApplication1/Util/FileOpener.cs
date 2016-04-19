@@ -6,7 +6,7 @@ namespace MPFConverterApp.Util
 {
     class FileOpener
     {
-        public static void openLogFile()
+        public static void OpenLogFile()
         {
             if (File.Exists(Logger.getLogFilePath()))
             {
