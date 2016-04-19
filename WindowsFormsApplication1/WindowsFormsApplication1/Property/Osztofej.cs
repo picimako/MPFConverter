@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MPFConverterApp
+﻿namespace MPFConverterApp
 {
     class Osztofej
     {
@@ -10,10 +8,10 @@ namespace MPFConverterApp
         public Osztofej()
         {
             Enabled = false;
-            Value = String.Empty;
+            Value = string.Empty;
         }
 
-        public Osztofej(bool enabled, String value)
+        public Osztofej(bool enabled, string value)
         {
             Enabled = enabled;
             Value = value;

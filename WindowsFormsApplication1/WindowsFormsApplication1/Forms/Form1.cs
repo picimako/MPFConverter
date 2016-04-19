@@ -56,6 +56,7 @@ namespace MPFConverterApp
             {
                 
                 RadioButton radioButton = factory.CreateRadioButtonFor(currentFolder);
+                //TODO: move this delegate as well to the factory
                 radioButton.CheckedChanged += delegate(object sender, EventArgs e)
                 {
                     getTargetFolderForRadioButton(radioButton).Enabled = radioButton.Checked;
@@ -76,6 +77,7 @@ namespace MPFConverterApp
                 TextBox baseTargetFolder = factory.CreateBaseTargetFolderTextBoxFor(currentFolder);
 
                 TextBox targetFolder = factory.CreateTargetFolderTextBoxFor(currentFolder);
+                //TODO: move this delegate as well to the factory
                 targetFolder.TextChanged += delegate(object sender, EventArgs e)
                 {
                     getNCTConfigForSelectedNetwork().NetworkTargetFolder = getNetworkConfigForSelectedNetwork().BaseTargetFolder +

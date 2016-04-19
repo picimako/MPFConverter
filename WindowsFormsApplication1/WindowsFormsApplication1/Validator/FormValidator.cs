@@ -7,7 +7,7 @@ namespace MPFConverterApp
     class FormValidator
     {
         private ConfigurationControls controls;
-        public Int32 ProgramId;
+        public int ProgramId;
 
         public FormValidator(ConfigurationControls configurationControls)
         {
@@ -52,10 +52,7 @@ namespace MPFConverterApp
         public bool areKiallasValuesValid(params TextBox[] valueBoxes)
         {
             bool isValueValid = true;
-            foreach (TextBox valueBox in valueBoxes.ToList<TextBox>())
-            {
-                isValueValid = isValueValid & isKiallasValueValidFor(valueBox);
-            }
+            valueBoxes.ToList().ForEach(valueBox => isValueValid &= isKiallasValueValidFor(valueBox));
             return isValueValid;
         }
 
