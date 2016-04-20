@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using System.IO;
@@ -9,20 +8,20 @@ using MPFConverterApp.Util;
 
 namespace MPFConverterApp
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private Dictionary<NetworkMachineConfiguration, NCTConfiguration> configurations;
         private ConfigurationSwitcher switcher;
         private ConfigurationControls controls;
         private FormValidator validator;
 
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
 
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             setUpConfigurationControls();
-            configurations = new Dictionary<NetworkMachineConfiguration, NCTConfiguration>(Settings.settings.MachineBaseTargetFolders.Count);
+            configurations = new Dictionary<NetworkMachineConfiguration, NCTConfiguration>(Settings.instance.MachineBaseTargetFolders.Count);
             setNetworkMachines();
             switcher = new ConfigurationSwitcher(controls);
             validator = new FormValidator(controls);
@@ -52,21 +51,20 @@ namespace MPFConverterApp
         {
             NetworkFormControlFactory factory = new NetworkFormControlFactory();
 
-            for (int currentFolder = 0; currentFolder < Settings.settings.MachineBaseTargetFolders.Count; currentFolder++)
+            for (int currentFolder = 0; currentFolder < Settings.instance.MachineBaseTargetFolders.Count; currentFolder++)
             {
-                
                 RadioButton radioButton = factory.CreateRadioButtonFor(currentFolder);
                 //TODO: move this delegate as well to the factory
-                radioButton.CheckedChanged += delegate(object sender, EventArgs e)
+                radioButton.CheckedChanged += (sender, e) =>
                 {
-                    getTargetFolderForRadioButton(radioButton).Enabled = radioButton.Checked;
+                    getNetworkConfigForRadioButton(radioButton).TargetFolder.Enabled = radioButton.Checked;
                     
                     /*A CheckedChanged kétszer fut le. Először arra a RadioButton-re, amiből ki lett szedve a pötty,
                     * majd utána arra, amelyikbe be lett téve a pötty.*/
                     if (radioButton.Checked)
                     {
                         switcher.readConfigFrom(getNCTConfigForSelectedNetwork());
-                        getTargetFolderForRadioButton(radioButton).Text = getNCTConfigForSelectedNetwork().NetworkTargetFolder;
+                        getNetworkConfigForRadioButton(radioButton).TargetFolder.Text = getNCTConfigForSelectedNetwork().NetworkTargetFolder;
                     }
                     else
                     {
@@ -78,7 +76,7 @@ namespace MPFConverterApp
 
                 TextBox targetFolder = factory.CreateTargetFolderTextBoxFor(currentFolder);
                 //TODO: move this delegate as well to the factory
-                targetFolder.TextChanged += delegate(object sender, EventArgs e)
+                targetFolder.TextChanged += (sender, e) =>
                 {
                     getNCTConfigForSelectedNetwork().NetworkTargetFolder = getNetworkConfigForSelectedNetwork().BaseTargetFolder +
                         getNetworkConfigForSelectedNetwork().TargetFolder.Text;
@@ -106,18 +104,18 @@ namespace MPFConverterApp
 
         private void setEventHandlers()
         {
-            mitTextBox.TextChanged += delegate(object sender, EventArgs e) { setKeszitButton(); };
-            idBox.TextChanged += delegate(object sender, EventArgs e)
+            mitTextBox.TextChanged += (sender, e) => { setKeszitButton(); };
+            idBox.TextChanged += (sender, e) =>
             {
                 setKeszitButton();
                 getNCTConfigForSelectedNetwork().ProgramId = validator.ProgramId;
             };
-            osztofejValueBox.TextChanged += delegate(object sender, EventArgs e)
+            osztofejValueBox.TextChanged += (sender, e) =>
             {
                 setKeszitButton();
                 getNCTConfigForSelectedNetwork().Osztofej.Value = osztofejValueBox.Text;
             };
-            osztofejBox.CheckedChanged += delegate(object sender, EventArgs e)
+            osztofejBox.CheckedChanged += (sender, e) =>
             {
                 setKeszitButton();
                 osztofejValueBox.Enabled = !osztofejValueBox.Enabled;
@@ -125,45 +123,35 @@ namespace MPFConverterApp
                 iNeededCheckbox.Enabled = osztofejBox.Checked;
                 getNCTConfigForSelectedNetwork().Osztofej.Enabled = osztofejBox.Checked;
             };
-            commentTextBox.TextChanged += delegate(object sender, EventArgs e)
-            {
-                getNCTConfigForSelectedNetwork().Comment = commentTextBox.Text;
-            };
-            //iNeededCheckbox.CheckedChanged += (sender, e) => { getNCTConfigForSelectedNetwork().INeeded = iNeededCheckbox.Checked; };
-            iNeededCheckbox.CheckedChanged += delegate (object sender, EventArgs e)
-            {
-                getNCTConfigForSelectedNetwork().INeeded = iNeededCheckbox.Checked;
-            };
-            gqCheckBox.CheckedChanged += delegate(object sender, EventArgs e)
-            {
-                getNCTConfigForSelectedNetwork().GQHSHPNeeded = gqCheckBox.Checked;
-            };
-            kiallasBox.CheckedChanged += delegate(object sender, EventArgs e)
+            commentTextBox.TextChanged += (sender, e) => { getNCTConfigForSelectedNetwork().Comment = commentTextBox.Text; };
+
+            iNeededCheckbox.CheckedChanged += (sender, e) => { getNCTConfigForSelectedNetwork().INeeded = iNeededCheckbox.Checked; };
+
+            gqCheckBox.CheckedChanged += (sender, e) => { getNCTConfigForSelectedNetwork().GQHSHPNeeded = gqCheckBox.Checked; };
+
+            kiallasBox.CheckedChanged += (sender, e) =>
             {
                 setKeszitButton();
                 getNCTConfigForSelectedNetwork().Kiallas.Enabled = kiallasBox.Checked;
                 xValueBox.Enabled = yValueBox.Enabled = zValueBox.Enabled = !xValueBox.Enabled;
                 xValueBox.Text = yValueBox.Text = zValueBox.Text = String.Empty;
             };
-            xValueBox.TextChanged += delegate(object sender, EventArgs e)
+            xValueBox.TextChanged += (sender, e) =>
             {
                 setKeszitButton();
                 getNCTConfigForSelectedNetwork().Kiallas.X = xValueBox.Text;
             };
-            yValueBox.TextChanged += delegate(object sender, EventArgs e)
+            yValueBox.TextChanged += (sender, e) =>
             {
                 setKeszitButton();
                 getNCTConfigForSelectedNetwork().Kiallas.Y = yValueBox.Text;
             };
-            zValueBox.TextChanged += delegate(object sender, EventArgs e)
+            zValueBox.TextChanged += (sender, e) =>
             {
                 setKeszitButton();
                 getNCTConfigForSelectedNetwork().Kiallas.Z = zValueBox.Text;
             };
-            g30CheckBox.CheckedChanged += delegate(object sender, EventArgs e)
-            {
-                getNCTConfigForSelectedNetwork().G30Needed = g30CheckBox.Checked;
-            };
+            g30CheckBox.CheckedChanged += (sender, e) => { getNCTConfigForSelectedNetwork().G30Needed = g30CheckBox.Checked; };
         }
 
         private void setFormItemsStatus()
@@ -267,14 +255,12 @@ namespace MPFConverterApp
 
         private NetworkMachineConfiguration getNetworkConfigForSelectedNetwork()
         {
-            foreach (NetworkMachineConfiguration netConfig in configurations.Keys)
-            {
-                if (netConfig.RadioButton.Checked)
-                {
-                    return netConfig;
-                }
-            }
-            return null;
+            return configurations.Keys.ToList().Where(netConfig => netConfig.RadioButton.Checked).FirstOrDefault();
+        }
+        
+        private NetworkMachineConfiguration getNetworkConfigForRadioButton(RadioButton radioButton)
+        {
+            return configurations.Keys.ToList().Where(netConfig => netConfig.RadioButton == radioButton).FirstOrDefault();
         }
 
         private NCTConfiguration getNCTConfigForSelectedNetwork()
@@ -282,26 +268,9 @@ namespace MPFConverterApp
             return configurations[getNetworkConfigForSelectedNetwork()];
         }
 
-        private NetworkMachineConfiguration getNetworkConfigForRadioButton(RadioButton radioButton)
-        {
-            foreach (NetworkMachineConfiguration netConfig in configurations.Keys)
-            {
-                if (netConfig.RadioButton == radioButton)
-                {
-                    return netConfig;
-                }
-            }
-            return null;
-        }
-
         private NCTConfiguration getNCTConfigForRadioButton(RadioButton radioButton)
         {
             return configurations[getNetworkConfigForRadioButton(radioButton)];
-        }
-
-        private TextBox getTargetFolderForRadioButton(RadioButton radioButton)
-        {
-            return getNetworkConfigForRadioButton(radioButton).TargetFolder;
         }
     }
 }

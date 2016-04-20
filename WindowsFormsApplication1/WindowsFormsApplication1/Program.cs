@@ -19,13 +19,13 @@ namespace MPFConverterApp
                 using (StreamReader reader = new StreamReader(Application.StartupPath + @"\settings.txt"))
                 {
                     string line = reader.ReadLine();
-                    Settings.settings.setGQOn(splittedLine(line)[0]);
-                    Settings.settings.setGQOff(splittedLine(line)[1]);
+                    Settings.instance.setGQOn(splittedLine(line)[0]);
+                    Settings.instance.setGQOff(splittedLine(line)[1]);
 
                     while ((line = reader.ReadLine()) != null)
                     {
                         string[] lineElements = splittedLine(line);
-                        Settings.settings.MachineBaseTargetFolders.Add(new KeyValuePair<string ,string>(lineElements[0], lineElements[1]));
+                        Settings.instance.MachineBaseTargetFolders.Add(new KeyValuePair<string ,string>(lineElements[0], lineElements[1]));
                     }
                     //line = reader.ReadLine();
                     //Settings.settings.setMachineOneBaseTargetFolder(line);
@@ -33,7 +33,7 @@ namespace MPFConverterApp
                     //line = reader.ReadLine();
                     //Settings.settings.setMachineTwoBaseTargetFolder(line);
                 }
-                Settings.settings.setApplicationStartupPath(Application.StartupPath);
+                Settings.instance.setApplicationStartupPath(Application.StartupPath);
             }
             catch (FileNotFoundException fnfe)
             {
@@ -48,7 +48,7 @@ namespace MPFConverterApp
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new MainForm());
         }
 
         private static string[] splittedLine(string line)
