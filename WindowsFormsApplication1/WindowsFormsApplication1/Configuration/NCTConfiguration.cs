@@ -1,4 +1,4 @@
-﻿namespace MPFConverterApp
+﻿namespace MPFConverterApp.Configuration
 {
     class NCTConfiguration
     {

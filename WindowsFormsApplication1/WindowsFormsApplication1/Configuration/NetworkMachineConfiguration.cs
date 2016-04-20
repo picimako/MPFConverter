@@ -1,6 +1,6 @@
 ﻿using System.Windows.Forms;
 
-namespace MPFConverterApp
+namespace MPFConverterApp.Configuration
 {
     class NetworkMachineConfiguration
     {
