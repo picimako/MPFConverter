@@ -13,7 +13,7 @@ namespace MPFConverterApp.Forms
         {
             RadioButton radioButton = new RadioButton();
             radioButton.Location = new Point(radioX, radioY + currentFolderNumber * radioYDiff);
-            radioButton.Text = Settings.settings.MachineBaseTargetFolders[currentFolderNumber].Key;
+            radioButton.Text = Settings.instance.MachineBaseTargetFolders[currentFolderNumber].Key;
             return radioButton;
         }
 
@@ -22,7 +22,7 @@ namespace MPFConverterApp.Forms
             TextBox baseTargetFolder = new TextBox();
             baseTargetFolder.Size = new Size(157, 20);
             baseTargetFolder.Location = new Point(baseTargetFolderX, baseTargetFolderY + currentFolderNumber * baseTargetFolderDiff);
-            baseTargetFolder.Text = Settings.settings.MachineBaseTargetFolders[currentFolderNumber].Value;
+            baseTargetFolder.Text = Settings.instance.MachineBaseTargetFolders[currentFolderNumber].Value;
             baseTargetFolder.Enabled = false;
 
             return baseTargetFolder;

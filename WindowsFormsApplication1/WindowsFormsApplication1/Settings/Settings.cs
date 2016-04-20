@@ -4,7 +4,7 @@ namespace MPFConverterApp
 {
     class Settings
     {
-        private static Settings SETTINGS;
+        private static Settings INSTANCE;
         private string gqOn;
         private string gqOff;
         private string applicationStartupPath;
@@ -15,15 +15,15 @@ namespace MPFConverterApp
             MachineBaseTargetFolders = new List<KeyValuePair<string, string>>();
         }
 
-        public static Settings settings
+        public static Settings instance
         {
             get
             {
-                if (SETTINGS == null)
+                if (INSTANCE == null)
                 {
-                    SETTINGS = new Settings();
+                    INSTANCE = new Settings();
                 }
-                return SETTINGS;
+                return INSTANCE;
             }
         }
 

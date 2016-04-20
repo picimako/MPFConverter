@@ -89,8 +89,8 @@ namespace MPFConverterApp
         {
             if (gqCheckBox.Checked)
             {
-                logger.logComment("GQ kezdőérték kiírása: " + Settings.settings.getGQOn());
-                writer.WriteLine(Settings.settings.getGQOn());
+                logger.logComment("GQ kezdőérték kiírása: " + Settings.instance.getGQOn());
+                writer.WriteLine(Settings.instance.getGQOn());
             }
         }
 
@@ -98,8 +98,8 @@ namespace MPFConverterApp
         {
             if (gqCheckBox.Checked && "M30".Equals(final))
             {
-                logger.logComment("GQ záróérték kiírása: " + Settings.settings.getGQOff());
-                writer.WriteLine(Settings.settings.getGQOff());
+                logger.logComment("GQ záróérték kiírása: " + Settings.instance.getGQOff());
+                writer.WriteLine(Settings.instance.getGQOff());
             }
         }
 

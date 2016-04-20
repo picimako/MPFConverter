@@ -5,7 +5,7 @@ namespace MPFConverterApp
     class Logger
     {
         private static Logger LOGGER;
-        private static string logFilePath = Settings.settings.getApplicationStartupPath() + @"\log.txt";
+        private static string logFilePath = Settings.instance.getApplicationStartupPath() + @"\log.txt";
         private static TextWriter writer;
 
         private Logger() { }
