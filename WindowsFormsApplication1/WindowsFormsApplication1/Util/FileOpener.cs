@@ -8,9 +8,9 @@ namespace MPFConverterApp.Util
     {
         public static void OpenLogFile()
         {
-            if (File.Exists(Logger.getLogFilePath()))
+            if (File.Exists(Logger.GetLogFilePath()))
             {
-                Process.Start(Logger.getLogFilePath());
+                Process.Start(Logger.GetLogFilePath());
             }
             else
             {

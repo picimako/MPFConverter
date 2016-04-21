@@ -14,28 +14,28 @@ namespace MPFConverterApp
             controls = configurationControls;
         }
 
-        public bool isPathNotEmpty(TextBox sourceBox)
+        public bool IsPathNotEmpty(TextBox sourceBox)
         {
             return !sourceBox.Text.Equals(String.Empty);
         }
 
-        public bool isProgramIdValid()
+        public bool IsProgramIdValid()
         {
             bool programIdValid = false;
             programIdValid = (!String.Empty.Equals(controls.ID.Text)
                 && !controls.ID.Text.StartsWith("0")
                 && !controls.ID.Text.StartsWith("-")
                 && controls.ID.Text.Length == 4
-                && isIdContainNumbersOnly()) ? true : false;
+                && IsIdContainNumbersOnly()) ? true : false;
             return programIdValid;
         }
 
-        public bool isIdContainNumbersOnly()
+        public bool IsIdContainNumbersOnly()
         {
             return Int32.TryParse(controls.ID.Text, out ProgramId);
         }
 
-        public bool isOsztofejAngleValid()
+        public bool IsOsztofejAngleValid()
         {
             double osztofejAngle;
             if (!controls.Osztofej.Checked
@@ -49,14 +49,14 @@ namespace MPFConverterApp
             return false;
         }
 
-        public bool areKiallasValuesValid(params TextBox[] valueBoxes)
+        public bool AreKiallasValuesValid(params TextBox[] valueBoxes)
         {
             bool isValueValid = true;
-            valueBoxes.ToList().ForEach(valueBox => isValueValid &= isKiallasValueValidFor(valueBox));
+            valueBoxes.ToList().ForEach(valueBox => isValueValid &= IsKiallasValueValidFor(valueBox));
             return isValueValid;
         }
 
-        public bool isKiallasValueValidFor(TextBox valueBox)
+        public bool IsKiallasValueValidFor(TextBox valueBox)
         {
             double commonKiallasValue;
             if (!controls.Kiallas.Checked

@@ -53,7 +53,7 @@ namespace MPFConverterApp
         {
             NetworkFormControlFactory factory = new NetworkFormControlFactory(configHandler, configSwitcher);
 
-            for (int currentFolder = 0; currentFolder < Settings.instance.MachineBaseTargetFolders.Count; currentFolder++)
+            for (int currentFolder = 0; currentFolder < Settings.Instance.MachineBaseTargetFolders.Count; currentFolder++)
             {
                 RadioButton radioButton = factory.CreateRadioButtonFor(currentFolder);
                 TextBox baseTargetFolder = factory.CreateBaseTargetFolderTextBoxFor(currentFolder);
@@ -85,12 +85,12 @@ namespace MPFConverterApp
             idBox.TextChanged += (sender, e) =>
             {
                 setKeszitButton();
-                configHandler.getNCTConfigForSelectedNetwork().ProgramId = validator.ProgramId;
+                configHandler.GetNCTConfigForSelectedNetwork().ProgramId = validator.ProgramId;
             };
             osztofejValueBox.TextChanged += (sender, e) =>
             {
                 setKeszitButton();
-                configHandler.getNCTConfigForSelectedNetwork().Osztofej.Value = osztofejValueBox.Text;
+                configHandler.GetNCTConfigForSelectedNetwork().Osztofej.Value = osztofejValueBox.Text;
             };
             osztofejBox.CheckedChanged += (sender, e) =>
             {
@@ -98,37 +98,37 @@ namespace MPFConverterApp
                 osztofejValueBox.Enabled = !osztofejValueBox.Enabled;
                 osztofejValueBox.Text = String.Empty;
                 iNeededCheckbox.Enabled = osztofejBox.Checked;
-                configHandler.getNCTConfigForSelectedNetwork().Osztofej.Enabled = osztofejBox.Checked;
+                configHandler.GetNCTConfigForSelectedNetwork().Osztofej.Enabled = osztofejBox.Checked;
             };
-            commentTextBox.TextChanged += (sender, e) => { configHandler.getNCTConfigForSelectedNetwork().Comment = commentTextBox.Text; };
+            commentTextBox.TextChanged += (sender, e) => { configHandler.GetNCTConfigForSelectedNetwork().Comment = commentTextBox.Text; };
 
-            iNeededCheckbox.CheckedChanged += (sender, e) => { configHandler.getNCTConfigForSelectedNetwork().INeeded = iNeededCheckbox.Checked; };
+            iNeededCheckbox.CheckedChanged += (sender, e) => { configHandler.GetNCTConfigForSelectedNetwork().INeeded = iNeededCheckbox.Checked; };
 
-            gqCheckBox.CheckedChanged += (sender, e) => { configHandler.getNCTConfigForSelectedNetwork().GQHSHPNeeded = gqCheckBox.Checked; };
+            gqCheckBox.CheckedChanged += (sender, e) => { configHandler.GetNCTConfigForSelectedNetwork().GQHSHPNeeded = gqCheckBox.Checked; };
 
             kiallasBox.CheckedChanged += (sender, e) =>
             {
                 setKeszitButton();
-                configHandler.getNCTConfigForSelectedNetwork().Kiallas.Enabled = kiallasBox.Checked;
+                configHandler.GetNCTConfigForSelectedNetwork().Kiallas.Enabled = kiallasBox.Checked;
                 xValueBox.Enabled = yValueBox.Enabled = zValueBox.Enabled = !xValueBox.Enabled;
                 xValueBox.Text = yValueBox.Text = zValueBox.Text = String.Empty;
             };
             xValueBox.TextChanged += (sender, e) =>
             {
                 setKeszitButton();
-                configHandler.getNCTConfigForSelectedNetwork().Kiallas.X = xValueBox.Text;
+                configHandler.GetNCTConfigForSelectedNetwork().Kiallas.X = xValueBox.Text;
             };
             yValueBox.TextChanged += (sender, e) =>
             {
                 setKeszitButton();
-                configHandler.getNCTConfigForSelectedNetwork().Kiallas.Y = yValueBox.Text;
+                configHandler.GetNCTConfigForSelectedNetwork().Kiallas.Y = yValueBox.Text;
             };
             zValueBox.TextChanged += (sender, e) =>
             {
                 setKeszitButton();
-                configHandler.getNCTConfigForSelectedNetwork().Kiallas.Z = zValueBox.Text;
+                configHandler.GetNCTConfigForSelectedNetwork().Kiallas.Z = zValueBox.Text;
             };
-            g30CheckBox.CheckedChanged += (sender, e) => { configHandler.getNCTConfigForSelectedNetwork().G30Needed = g30CheckBox.Checked; };
+            g30CheckBox.CheckedChanged += (sender, e) => { configHandler.GetNCTConfigForSelectedNetwork().G30Needed = g30CheckBox.Checked; };
         }
 
         private void setFormItemsStatus()
@@ -164,10 +164,10 @@ namespace MPFConverterApp
         private void setKeszitButton()
         {
             keszitButton.Enabled = (
-                validator.isProgramIdValid()
-                && validator.isOsztofejAngleValid()
-                && validator.areKiallasValuesValid(xValueBox, yValueBox, zValueBox)
-                && validator.isPathNotEmpty(mitTextBox)
+                validator.IsProgramIdValid()
+                && validator.IsOsztofejAngleValid()
+                && validator.AreKiallasValuesValid(xValueBox, yValueBox, zValueBox)
+                && validator.IsPathNotEmpty(mitTextBox)
                 && File.Exists(mitTextBox.Text)) ? true : false;
         }
 
@@ -176,9 +176,9 @@ namespace MPFConverterApp
             //TODO: check why this is there, and whether this is necessary
             Osztofej osztofej = new Osztofej(osztofejBox.Checked, osztofejValueBox.Text);
             string networkTargetFolder =
-                configHandler.getNetworkConfigForSelectedNetwork().BaseTargetFolder +
-                configHandler.getNetworkConfigForSelectedNetwork().TargetFolder.Text;
-            new Converter(doneLabel, gqCheckBox).convertFromMpfToNct(mitTextBox.Text, hovaTextBox.Text, configHandler.getNCTConfigForSelectedNetwork());
+                configHandler.GetNetworkConfigForSelectedNetwork().BaseTargetFolder +
+                configHandler.GetNetworkConfigForSelectedNetwork().TargetFolder.Text;
+            new Converter(doneLabel, gqCheckBox).ConvertFromMpfToNct(mitTextBox.Text, hovaTextBox.Text, configHandler.GetNCTConfigForSelectedNetwork());
             doAfterCreation();
         }
 
@@ -205,13 +205,13 @@ namespace MPFConverterApp
 
         private void networkFolderBrowseButton_Click(object sender, EventArgs e)
         {
-            string baseSelectedPath = configHandler.getNetworkConfigForSelectedNetwork().BaseTargetFolder;
+            string baseSelectedPath = configHandler.GetNetworkConfigForSelectedNetwork().BaseTargetFolder;
             FolderBrowserDialog networkDialog = new NetworkFolderBrowserDialogFactory().CreateDialogFor(baseSelectedPath);
             if (!"NETWORK_FOLDER_NOT_FOUND".Equals(networkDialog.Tag) && networkDialog.ShowDialog() == DialogResult.OK)
             {
                 int startCharacterIndexOfFolder = networkDialog.SelectedPath.LastIndexOf(baseSelectedPath) + baseSelectedPath.Length;
                 string targetFolderText = Path.GetDirectoryName(networkDialog.SelectedPath + "\\").Substring(startCharacterIndexOfFolder);
-                configHandler.getNetworkConfigForSelectedNetwork().TargetFolder.Text = targetFolderText;
+                configHandler.GetNetworkConfigForSelectedNetwork().TargetFolder.Text = targetFolderText;
             }
         }
 

@@ -6,7 +6,7 @@ namespace MPFConverterApp
 {
     class FileCopier
     {
-        public static void copyNCTFileToNetworkFolder(string networkTargetFolder, string newNctFile, Logger logger)
+        public static void CopyNCTFileToNetworkFolder(string networkTargetFolder, string newNctFile, Logger logger)
         {
             if (!Directory.Exists(networkTargetFolder))
             {
@@ -14,7 +14,7 @@ namespace MPFConverterApp
                 return;
             }
             string finalNetworkTarget = networkTargetFolder + "\\" + Path.GetFileName(newNctFile);
-            logger.logComment("Az elkészített NCT fájl [" + finalNetworkTarget + "] másolásának megkezdése a hálózatra.");
+            logger.LogComment("Az elkészített NCT fájl [" + finalNetworkTarget + "] másolásának megkezdése a hálózatra.");
 
             if (File.Exists(finalNetworkTarget))
             {
@@ -29,7 +29,7 @@ namespace MPFConverterApp
                 }
             }
             File.Copy(newNctFile, finalNetworkTarget);
-            logger.logComment("Az elkészített NCT fájl sikeresen átmásolva a megadott hálózati helyre.");
+            logger.LogComment("Az elkészített NCT fájl sikeresen átmásolva a megadott hálózati helyre.");
         }
     }
 }

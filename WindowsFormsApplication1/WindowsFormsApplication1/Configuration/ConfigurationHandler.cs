@@ -13,24 +13,24 @@ namespace MPFConverterApp.Configuration
             this.Configurations = new Dictionary<NetworkMachineConfiguration, NCTConfiguration>();
         }
 
-        public NetworkMachineConfiguration getNetworkConfigForSelectedNetwork()
+        public NetworkMachineConfiguration GetNetworkConfigForSelectedNetwork()
         {
             return Configurations.Keys.ToList().Where(netConfig => netConfig.RadioButton.Checked).FirstOrDefault();
         }
 
-        public NetworkMachineConfiguration getNetworkConfigForRadioButton(RadioButton radioButton)
+        public NetworkMachineConfiguration GetNetworkConfigForRadioButton(RadioButton radioButton)
         {
             return Configurations.Keys.ToList().Where(netConfig => netConfig.RadioButton == radioButton).FirstOrDefault();
         }
 
-        public NCTConfiguration getNCTConfigForSelectedNetwork()
+        public NCTConfiguration GetNCTConfigForSelectedNetwork()
         {
-            return Configurations[getNetworkConfigForSelectedNetwork()];
+            return Configurations[GetNetworkConfigForSelectedNetwork()];
         }
 
-        public NCTConfiguration getNCTConfigForRadioButton(RadioButton radioButton)
+        public NCTConfiguration GetNCTConfigForRadioButton(RadioButton radioButton)
         {
-            return Configurations[getNetworkConfigForRadioButton(radioButton)];
+            return Configurations[GetNetworkConfigForRadioButton(radioButton)];
         }
     }
 }

@@ -7,12 +7,13 @@ namespace MPFConverterApp
 {
     class Converter
     {
+        private const string MPF_FOLDER = @"D:\MPF\";
+        private const string NCT_FOLDER = @"D:\NCT\";
+        private const string G30VALUE = "G30ZI0P4";
+
         private Label doneLabel;
         private CheckBox gqCheckBox;
         private Logger logger;
-        private const string mpfFolder = @"D:\MPF\";
-        private const string nctFolder = @"D:\NCT\";
-        private const string G30VALUE = "G30ZI0P4";
         private string networkTargetFolder;
 
         public Converter(Label doneLabel, CheckBox gqCheckBox)
@@ -21,42 +22,42 @@ namespace MPFConverterApp
             this.gqCheckBox = gqCheckBox;
         }
 
-        public void convertFromMpfToNct(string mpfFileParam, string nctFileParam, NCTConfiguration config)
+        public void ConvertFromMpfToNct(string mpfFileParam, string nctFileParam, NCTConfiguration config)
         {
             this.networkTargetFolder = config.NetworkTargetFolder;
             logger = Logger.logger;
-            logger.logComment("Program azonosító: " + config.ProgramId);
+            logger.LogComment("Program azonosító: " + config.ProgramId);
             char[] lineAsCharacters = null;
             string mpfFile = mpfFileParam;
-            FolderUtil.CreateDirectoryIfNotExists(mpfFolder, logger);
+            FolderUtil.CreateDirectoryIfNotExists(MPF_FOLDER, logger);
             //köztes fájl
-            string nctFile = mpfFolder + Path.GetFileName(nctFileParam);
+            string nctFile = MPF_FOLDER + Path.GetFileName(nctFileParam);
 
             using (StreamReader reader = new StreamReader(mpfFile))
             {
                 String line;
                 TextWriter writer = new StreamWriter(nctFile, false);
                 writer.WriteLine(String.Format("%O{0} ({1})", config.ProgramId, config.Comment));
-                writeOsztofejValue(writer, config.Osztofej, config.INeeded);
-                writeGQOn(writer);
+                WriteOsztofejValue(writer, config.Osztofej, config.INeeded);
+                WriteGQOn(writer);
                 //while ((line = reader.ReadLine()) != null)
                 while (!"M30".Equals(line = reader.ReadLine()))
                 {
-                    string final = putSemicolonedPartOfRowsIntoBrackets(lineAsCharacters, line);
-                    writeGQOffAtFileEnd(writer, final);
-                    writeXYZ(writer, config.Kiallas, final);
+                    string final = PutSemicolonedPartOfRowsIntoBrackets(lineAsCharacters, line);
+                    WriteGQOffAtFileEnd(writer, final);
+                    WriteXYZ(writer, config.Kiallas, final);
                     writer.WriteLine(final);
                 }
-                writeG30BeforeM30(writer, config.G30Needed);
+                WriteG30BeforeM30(writer, config.G30Needed);
                 writer.WriteLine("M30");
                 writer.Write("%");
                 writer.Close();
 
-                convertNctToNewNct(nctFile);
+                ConvertNctToNewNct(nctFile);
             }
         }
 
-        private string putSemicolonedPartOfRowsIntoBrackets(char[] lineAsCharacters, String line)
+        private string PutSemicolonedPartOfRowsIntoBrackets(char[] lineAsCharacters, String line)
         {
             string final = "";
             lineAsCharacters = line.ToCharArray();
@@ -64,11 +65,11 @@ namespace MPFConverterApp
             int indexOfFirstBracket = line.LastIndexOf(";");
             if (indexOfFirstBracket != -1)
             {
-                logger.logComment("Aktuális sor zárójelezése: " + line);
+                logger.LogComment("Aktuális sor zárójelezése: " + line);
                 lineAsCharacters[indexOfFirstBracket] = '('; //a ; kicserélése (-re
                 final = new string(lineAsCharacters);
                 final += ")"; //a sor végleges változata egy )-et kap a sor végére
-                logger.logComment("Aktuális sor zárójelekkel: " + final);
+                logger.LogComment("Aktuális sor zárójelekkel: " + final);
             }
             else
             {
@@ -77,44 +78,44 @@ namespace MPFConverterApp
             return final;
         }
 
-        private void writeOsztofejValue(TextWriter writer, Osztofej osztofej, bool INeeded)
+        private void WriteOsztofejValue(TextWriter writer, Osztofej osztofej, bool INeeded)
         {
             if (osztofej.Enabled)
             {
-                logger.logComment("Osztófej érték: A" + osztofej.Value);
+                logger.LogComment("Osztófej érték: A" + osztofej.Value);
                 writer.WriteLine("A" + (INeeded ? "I" : "") + osztofej.Value);
             }
         }
 
-        private void writeGQOn(TextWriter writer)
+        private void WriteGQOn(TextWriter writer)
         {
             if (gqCheckBox.Checked)
             {
-                logger.logComment("GQ kezdőérték kiírása: " + Settings.instance.getGQOn());
-                writer.WriteLine(Settings.instance.getGQOn());
+                logger.LogComment("GQ kezdőérték kiírása: " + Settings.Instance.GQOn);
+                writer.WriteLine(Settings.Instance.GQOn);
             }
         }
 
-        private void writeGQOffAtFileEnd(TextWriter writer, string final)
+        private void WriteGQOffAtFileEnd(TextWriter writer, string final)
         {
             if (gqCheckBox.Checked && "M30".Equals(final))
             {
-                logger.logComment("GQ záróérték kiírása: " + Settings.instance.getGQOff());
-                writer.WriteLine(Settings.instance.getGQOff());
+                logger.LogComment("GQ záróérték kiírása: " + Settings.Instance.GQOff);
+                writer.WriteLine(Settings.Instance.GQOff);
             }
         }
 
-        private void writeXYZ(TextWriter writer, Kiallas kiallas, string final)
+        private void WriteXYZ(TextWriter writer, Kiallas kiallas, string final)
         {
             if (kiallas.Enabled && "M30".Equals(final))
             {
-                logger.logComment(String.Format("XYZ értékek kiírása. X: {0}, Y: {1}, Z: {2}", kiallas.X, kiallas.Y, kiallas.Z));
+                logger.LogComment(String.Format("XYZ értékek kiírása. X: {0}, Y: {1}, Z: {2}", kiallas.X, kiallas.Y, kiallas.Z));
                 writer.WriteLine(String.Format("G0 Z{0}", kiallas.Z));
                 writer.WriteLine(String.Format("G0 X{0} Y{1}", kiallas.X, kiallas.Y));
             }
         }
 
-        private void writeG30BeforeM30(TextWriter writer, bool g30Checked)
+        private void WriteG30BeforeM30(TextWriter writer, bool g30Checked)
         {
             if (g30Checked)
             {
@@ -138,9 +139,9 @@ namespace MPFConverterApp
          ///"G43 H<a T utáni szám>" után lehet, de nem feltétlen szükségeltetik szóköz a Zxx.xx elé
          ///A T után szerepelhet 2 jegyű szám is.
         ///</summary>
-        private void convertNctToNewNct(string initialNctFile)
+        private void ConvertNctToNewNct(string initialNctFile)
         {
-            string newNctFile = nctFolder + Path.GetFileNameWithoutExtension(initialNctFile) + (gqCheckBox.Checked ? "_f" : "") + Path.GetExtension(initialNctFile);
+            string newNctFile = NCT_FOLDER + Path.GetFileNameWithoutExtension(initialNctFile) + (gqCheckBox.Checked ? "_f" : "") + Path.GetExtension(initialNctFile);
             bool joMinta = false;
             String nextSignToLookFor = "T";
             int tErteke = -1;
@@ -148,8 +149,8 @@ namespace MPFConverterApp
             using (StreamReader reader = new StreamReader(initialNctFile))
             {
                 string line;
-                FolderUtil.CreateDirectoryIfNotExists(nctFolder, logger);
-                logger.logComment("A végleges fájl ide kerül létrehozásra: " + newNctFile);
+                FolderUtil.CreateDirectoryIfNotExists(NCT_FOLDER, logger);
+                logger.LogComment("A végleges fájl ide kerül létrehozásra: " + newNctFile);
                 TextWriter writer = new StreamWriter(newNctFile, false);
 
                 while ((line = reader.ReadLine()) != null)
@@ -176,19 +177,19 @@ namespace MPFConverterApp
                         switch (nextSignToLookFor)
                         {
                             case "M6":
-                                if (isLineContainLetter("M6", ref nextSignToLookFor, line, ref joMinta, writer))
+                                if (IsLineContainLetter("M6", ref nextSignToLookFor, line, ref joMinta, writer))
                                 {
                                     continue;
                                 }
                                 break;
                             case "S":
-                                if (isLineContainLetter("S", ref nextSignToLookFor, line, ref joMinta, writer))
+                                if (IsLineContainLetter("S", ref nextSignToLookFor, line, ref joMinta, writer))
                                 {
                                     continue;
                                 }
                                 break;
                             case "G":
-                                writeValuesAccordingToLineContainsG(ref nextSignToLookFor, line, ref joMinta, tErteke, writer);
+                                WriteValuesAccordingToLineContainsG(ref nextSignToLookFor, line, ref joMinta, tErteke, writer);
                                 break;
                         }
                     }
@@ -196,10 +197,10 @@ namespace MPFConverterApp
                 writer.Close();
                 doneLabel.Visible = true;
             }
-            finalization(initialNctFile, newNctFile);
+            Finalization(initialNctFile, newNctFile);
         }
 
-        private bool isLineContainLetter(string letter, ref string nextSignToLookFor, string line, ref bool joMinta, TextWriter writer)
+        private bool IsLineContainLetter(string letter, ref string nextSignToLookFor, string line, ref bool joMinta, TextWriter writer)
         {
             writer.WriteLine(line);
             if (line.Contains(letter))
@@ -210,7 +211,7 @@ namespace MPFConverterApp
             return joMinta = false;
         }
 
-        private void writeValuesAccordingToLineContainsG(ref string nextSignToLookFor, string line, ref bool joMinta, int tErteke, TextWriter writer)
+        private void WriteValuesAccordingToLineContainsG(ref string nextSignToLookFor, string line, ref bool joMinta, int tErteke, TextWriter writer)
         {
             if (line.Contains("G"))
             {
@@ -229,12 +230,12 @@ namespace MPFConverterApp
             joMinta = false;
         }
 
-        private void finalization(string initialNctFile, string newNctFile)
+        private void Finalization(string initialNctFile, string newNctFile)
         {
-            logger.logComment("Köztes fájl törlése.");
+            logger.LogComment("Köztes fájl törlése.");
             File.Delete(initialNctFile);
-            FileCopier.copyNCTFileToNetworkFolder(@networkTargetFolder, newNctFile, logger);
-            logger.closeLogger();
+            FileCopier.CopyNCTFileToNetworkFolder(@networkTargetFolder, newNctFile, logger);
+            logger.CloseLogger();
         }
     }
 }

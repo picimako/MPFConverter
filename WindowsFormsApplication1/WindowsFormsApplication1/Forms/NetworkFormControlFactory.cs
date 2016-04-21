@@ -22,21 +22,21 @@ namespace MPFConverterApp.Forms
         {
             RadioButton radioButton = new RadioButton();
             radioButton.Location = new Point(radioX, radioY + currentFolderNumber * radioYDiff);
-            radioButton.Text = Settings.instance.MachineBaseTargetFolders[currentFolderNumber].Key;
+            radioButton.Text = Settings.Instance.MachineBaseTargetFolders[currentFolderNumber].Key;
             radioButton.CheckedChanged += (sender, e) =>
             {
-                configHandler.getNetworkConfigForRadioButton(radioButton).TargetFolder.Enabled = radioButton.Checked;
+                configHandler.GetNetworkConfigForRadioButton(radioButton).TargetFolder.Enabled = radioButton.Checked;
 
                 /*A CheckedChanged kétszer fut le. Először arra a RadioButton-re, amiből ki lett szedve a pötty,
                 * majd utána arra, amelyikbe be lett téve a pötty.*/
                 if (radioButton.Checked)
                 {
-                    configSwitcher.readConfigFrom(configHandler.getNCTConfigForSelectedNetwork());
-                    configHandler.getNetworkConfigForRadioButton(radioButton).TargetFolder.Text = configHandler.getNCTConfigForSelectedNetwork().NetworkTargetFolder;
+                    configSwitcher.ReadConfigFrom(configHandler.GetNCTConfigForSelectedNetwork());
+                    configHandler.GetNetworkConfigForRadioButton(radioButton).TargetFolder.Text = configHandler.GetNCTConfigForSelectedNetwork().NetworkTargetFolder;
                 }
                 else
                 {
-                    configSwitcher.saveConfigTo(configHandler.getNCTConfigForRadioButton(radioButton), configHandler.getNetworkConfigForRadioButton(radioButton).TargetFolder.Text);
+                    configSwitcher.SaveConfigTo(configHandler.GetNCTConfigForRadioButton(radioButton), configHandler.GetNetworkConfigForRadioButton(radioButton).TargetFolder.Text);
                 }
             };
 
@@ -48,7 +48,7 @@ namespace MPFConverterApp.Forms
             TextBox baseTargetFolder = new TextBox();
             baseTargetFolder.Size = new Size(157, 20);
             baseTargetFolder.Location = new Point(baseTargetFolderX, baseTargetFolderY + currentFolderNumber * baseTargetFolderDiff);
-            baseTargetFolder.Text = Settings.instance.MachineBaseTargetFolders[currentFolderNumber].Value;
+            baseTargetFolder.Text = Settings.Instance.MachineBaseTargetFolders[currentFolderNumber].Value;
             baseTargetFolder.Enabled = false;
 
             return baseTargetFolder;
@@ -61,9 +61,9 @@ namespace MPFConverterApp.Forms
             targetFolder.Location = new Point(targetFolderX, targetFolderY + currentFolderNumber * targetFolderDiff);
             targetFolder.TextChanged += (sender, e) =>
             {
-                configHandler.getNCTConfigForSelectedNetwork().NetworkTargetFolder =
-                    configHandler.getNetworkConfigForSelectedNetwork().BaseTargetFolder +
-                    configHandler.getNetworkConfigForSelectedNetwork().TargetFolder.Text;
+                configHandler.GetNCTConfigForSelectedNetwork().NetworkTargetFolder =
+                    configHandler.GetNetworkConfigForSelectedNetwork().BaseTargetFolder +
+                    configHandler.GetNetworkConfigForSelectedNetwork().TargetFolder.Text;
             };
 
             return targetFolder;

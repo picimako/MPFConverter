@@ -5,7 +5,7 @@ namespace MPFConverterApp
     class Logger
     {
         private static Logger LOGGER;
-        private static string logFilePath = Settings.instance.getApplicationStartupPath() + @"\log.txt";
+        private static string logFilePath = Settings.Instance.ApplicationStartupPath + @"\log.txt";
         private static TextWriter writer;
 
         private Logger() { }
@@ -23,17 +23,17 @@ namespace MPFConverterApp
             }
         }
 
-        public void logComment(string comment)
+        public void LogComment(string comment)
         {
             writer.WriteLine(comment);
         }
 
-        public void closeLogger()
+        public void CloseLogger()
         {
             writer.Close();
         }
 
-        public static string getLogFilePath()
+        public static string GetLogFilePath()
         {
             return logFilePath;
         }

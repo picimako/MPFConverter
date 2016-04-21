@@ -19,30 +19,25 @@ namespace MPFConverterApp
                 using (StreamReader reader = new StreamReader(Application.StartupPath + @"\settings.txt"))
                 {
                     string line = reader.ReadLine();
-                    Settings.instance.setGQOn(splittedLine(line)[0]);
-                    Settings.instance.setGQOff(splittedLine(line)[1]);
+                    Settings.Instance.GQOn = Split(line)[0];
+                    Settings.Instance.GQOff = Split(line)[1];
 
                     while ((line = reader.ReadLine()) != null)
                     {
-                        string[] lineElements = splittedLine(line);
-                        Settings.instance.MachineBaseTargetFolders.Add(new KeyValuePair<string ,string>(lineElements[0], lineElements[1]));
+                        string[] lineElements = Split(line);
+                        Settings.Instance.MachineBaseTargetFolders.Add(new KeyValuePair<string ,string>(lineElements[0], lineElements[1]));
                     }
-                    //line = reader.ReadLine();
-                    //Settings.settings.setMachineOneBaseTargetFolder(line);
-
-                    //line = reader.ReadLine();
-                    //Settings.settings.setMachineTwoBaseTargetFolder(line);
                 }
-                Settings.instance.setApplicationStartupPath(Application.StartupPath);
+                Settings.Instance.ApplicationStartupPath = Application.StartupPath;
             }
-            catch (FileNotFoundException fnfe)
+            catch (FileNotFoundException e)
             {
-                Show(String.Format("A settings.txt nem található a következő helyen:\n{0}", fnfe.FileName));
+                Show(String.Format("A settings.txt nem található a következő helyen:\n{0}", e.FileName));
                 return;
             }
-            catch (IOException ioe)
+            catch (IOException e)
             {
-                Show(String.Format("Hiba történt a settings.txt beolvasása közben.\n\n{0}", ioe.StackTrace));
+                Show(String.Format("Hiba történt a settings.txt beolvasása közben.\n\n{0}", e.StackTrace));
                 return;
             }
 
@@ -51,7 +46,7 @@ namespace MPFConverterApp
             Application.Run(new MainForm());
         }
 
-        private static string[] splittedLine(string line)
+        private static string[] Split(string line)
         {
             return line.Split("#".ToCharArray());
         }

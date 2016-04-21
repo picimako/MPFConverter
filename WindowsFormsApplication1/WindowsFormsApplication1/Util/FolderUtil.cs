@@ -6,15 +6,15 @@ namespace MPFConverterApp
     {
         public static void CreateDirectoryIfNotExists(string path, Logger logger)
         {
-            logger.logComment("A következő útvonal elérhetőségének vizsgálata: " + path);
+            logger.LogComment("A következő útvonal elérhetőségének vizsgálata: " + path);
             if (!Directory.Exists(path))
             {
-                logger.logComment("A következő mappa létrehozása:" + path);
+                logger.LogComment("A következő mappa létrehozása:" + path);
                 Directory.CreateDirectory(path);
             }
             else
             {
-                logger.logComment("A mappa már létezik.");
+                logger.LogComment("A mappa már létezik.");
             }
         }
 

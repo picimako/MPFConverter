@@ -13,10 +13,10 @@
 
         public NCTConfiguration()
         {
-            setVariables(1000, string.Empty, new Osztofej(), false, false, new Kiallas());
+            SetVariables(1000, string.Empty, new Osztofej(), false, false, new Kiallas());
         }
 
-        private void setVariables(int programId, string comment, Osztofej osztofej, bool iNeeded, bool gqHshpNeeded, Kiallas kiallas)
+        private void SetVariables(int programId, string comment, Osztofej osztofej, bool iNeeded, bool gqHshpNeeded, Kiallas kiallas)
         {
             ProgramId = programId;
             Comment = comment;

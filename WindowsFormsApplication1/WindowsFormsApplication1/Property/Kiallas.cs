@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace MPFConverterApp
+﻿namespace MPFConverterApp
 {
     class Kiallas
     {
@@ -11,15 +9,15 @@ namespace MPFConverterApp
 
         public Kiallas()
         {
-            setVariables(false, String.Empty, String.Empty, String.Empty);
+            SetVariables(false, string.Empty, string.Empty, string.Empty);
         }
 
-        public Kiallas(bool enabled, String xValue, String yValue, String zValue)
+        public Kiallas(bool enabled, string xValue, string yValue, string zValue)
         {
-            setVariables(enabled, xValue, yValue, zValue);
+            SetVariables(enabled, xValue, yValue, zValue);
         }
 
-        private void setVariables(bool enabled, String xValue, String yValue, String zValue)
+        private void SetVariables(bool enabled, string xValue, string yValue, string zValue)
         {
             Enabled = enabled;
             X = xValue;
