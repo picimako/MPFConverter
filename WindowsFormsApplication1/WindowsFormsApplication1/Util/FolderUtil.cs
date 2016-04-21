@@ -4,7 +4,7 @@ namespace MPFConverterApp
 {
     class FolderUtil
     {
-        public static void createDirectoryIfNotExists(string path, Logger logger)
+        public static void CreateDirectoryIfNotExists(string path, Logger logger)
         {
             logger.logComment("A következő útvonal elérhetőségének vizsgálata: " + path);
             if (!Directory.Exists(path))
@@ -18,7 +18,7 @@ namespace MPFConverterApp
             }
         }
 
-        public static string getFirstChildFolderIfExist(string folder)
+        public static string GetFirstChildFolderIfExist(string folder)
         {
             DirectoryInfo sub = new DirectoryInfo(folder);
             if (sub.GetDirectories().Length > 0)

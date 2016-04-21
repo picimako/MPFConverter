@@ -28,7 +28,7 @@ namespace MPFConverterApp
             logger.logComment("Program azonosító: " + config.ProgramId);
             char[] lineAsCharacters = null;
             string mpfFile = mpfFileParam;
-            FolderUtil.createDirectoryIfNotExists(mpfFolder, logger);
+            FolderUtil.CreateDirectoryIfNotExists(mpfFolder, logger);
             //köztes fájl
             string nctFile = mpfFolder + Path.GetFileName(nctFileParam);
 
@@ -148,7 +148,7 @@ namespace MPFConverterApp
             using (StreamReader reader = new StreamReader(initialNctFile))
             {
                 string line;
-                FolderUtil.createDirectoryIfNotExists(nctFolder, logger);
+                FolderUtil.CreateDirectoryIfNotExists(nctFolder, logger);
                 logger.logComment("A végleges fájl ide kerül létrehozásra: " + newNctFile);
                 TextWriter writer = new StreamWriter(newNctFile, false);
 

@@ -8,10 +8,10 @@ namespace MPFConverterApp.Configuration
         public string BaseTargetFolder { get; set; }
         public TextBox TargetFolder { get; set; }
 
-        public NetworkMachineConfiguration(RadioButton radioButton, string baseTargetFolder, TextBox targetFolder)
+        public NetworkMachineConfiguration(RadioButton radioButton, TextBox baseTargetFolder, TextBox targetFolder)
         {
             RadioButton = radioButton;
-            BaseTargetFolder = baseTargetFolder;
+            BaseTargetFolder = baseTargetFolder.Text;
             TargetFolder = targetFolder;
         }
     }

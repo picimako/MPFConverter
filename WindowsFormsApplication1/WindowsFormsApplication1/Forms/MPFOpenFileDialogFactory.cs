@@ -4,7 +4,7 @@ namespace MPFConverterApp.Forms
 {
     class MPFOpenFileDialogFactory
     {
-        public static OpenFileDialog CreateDialog()
+        public OpenFileDialog CreateDialog()
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.InitialDirectory = @"D:\NC\";

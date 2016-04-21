@@ -10,7 +10,9 @@ namespace MPFConverterApp
 {
     public partial class MainForm : Form
     {
-        private ConfigurationSwitcher switcher;
+        private const int NETWORK_FOLDER_HEIGHT = 37;
+
+        private ConfigurationSwitcher configSwitcher;
         private ConfigurationControls controls;
         private ConfigurationHandler configHandler;
         private FormValidator validator;
@@ -22,8 +24,8 @@ namespace MPFConverterApp
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             setUpConfigurationControls();
             configHandler = new ConfigurationHandler();
+            configSwitcher = new ConfigurationSwitcher(controls);
             setNetworkMachines();
-            switcher = new ConfigurationSwitcher(controls);
             validator = new FormValidator(controls);
             setToolTips();
             setFormItemsStatus();
@@ -49,38 +51,13 @@ namespace MPFConverterApp
 
         private void setNetworkMachines()
         {
-            NetworkFormControlFactory factory = new NetworkFormControlFactory();
+            NetworkFormControlFactory factory = new NetworkFormControlFactory(configHandler, configSwitcher);
 
             for (int currentFolder = 0; currentFolder < Settings.instance.MachineBaseTargetFolders.Count; currentFolder++)
             {
                 RadioButton radioButton = factory.CreateRadioButtonFor(currentFolder);
-                //TODO: move this delegate as well to the factory
-                radioButton.CheckedChanged += (sender, e) =>
-                {
-                    configHandler.getNetworkConfigForRadioButton(radioButton).TargetFolder.Enabled = radioButton.Checked;
-                    
-                    /*A CheckedChanged kétszer fut le. Először arra a RadioButton-re, amiből ki lett szedve a pötty,
-                    * majd utána arra, amelyikbe be lett téve a pötty.*/
-                    if (radioButton.Checked)
-                    {
-                        switcher.readConfigFrom(configHandler.getNCTConfigForSelectedNetwork());
-                        configHandler.getNetworkConfigForRadioButton(radioButton).TargetFolder.Text = configHandler.getNCTConfigForSelectedNetwork().NetworkTargetFolder;
-                    }
-                    else
-                    {
-                        switcher.saveConfigTo(configHandler.getNCTConfigForRadioButton(radioButton), configHandler.getNetworkConfigForRadioButton(radioButton).TargetFolder.Text);
-                    }
-                };
-
                 TextBox baseTargetFolder = factory.CreateBaseTargetFolderTextBoxFor(currentFolder);
-
-                TextBox targetFolder = factory.CreateTargetFolderTextBoxFor(currentFolder);
-                //TODO: move this delegate as well to the factory
-                targetFolder.TextChanged += (sender, e) =>
-                {
-                    configHandler.getNCTConfigForSelectedNetwork().NetworkTargetFolder = configHandler.getNetworkConfigForSelectedNetwork().BaseTargetFolder +
-                        configHandler.getNetworkConfigForSelectedNetwork().TargetFolder.Text;
-                };
+                TextBox targetFolder = factory.CreateTargetFolderTextBoxFor(currentFolder);            
 
                 if (currentFolder > 0)
                 {
@@ -89,15 +66,15 @@ namespace MPFConverterApp
 
                 if (currentFolder > 1)
                 {
-                    this.Height += 37;
-                    groupBox1.Height += 37;
-                    groupBox2.Height += 37;
+                    this.Height += NETWORK_FOLDER_HEIGHT;
+                    groupBox1.Height += NETWORK_FOLDER_HEIGHT;
+                    groupBox2.Height += NETWORK_FOLDER_HEIGHT;
                 }
                 groupBox2.Controls.Add(radioButton);
                 groupBox1.Controls.Add(baseTargetFolder);
                 groupBox1.Controls.Add(targetFolder);
                 configHandler.Configurations.Add(
-                    new NetworkMachineConfiguration(radioButton, baseTargetFolder.Text, targetFolder),
+                    new NetworkMachineConfiguration(radioButton, baseTargetFolder, targetFolder),
                     new NCTConfiguration());
             }
         }
@@ -196,12 +173,12 @@ namespace MPFConverterApp
 
         private void keszitButton_Click(object sender, EventArgs e)
         {
+            //TODO: check why this is there, and whether this is necessary
             Osztofej osztofej = new Osztofej(osztofejBox.Checked, osztofejValueBox.Text);
             string networkTargetFolder =
                 configHandler.getNetworkConfigForSelectedNetwork().BaseTargetFolder +
                 configHandler.getNetworkConfigForSelectedNetwork().TargetFolder.Text;
-            Converter converter = new Converter(doneLabel, gqCheckBox);
-            converter.convertFromMpfToNct(mitTextBox.Text, hovaTextBox.Text, configHandler.getNCTConfigForSelectedNetwork());
+            new Converter(doneLabel, gqCheckBox).convertFromMpfToNct(mitTextBox.Text, hovaTextBox.Text, configHandler.getNCTConfigForSelectedNetwork());
             doAfterCreation();
         }
 
@@ -218,7 +195,7 @@ namespace MPFConverterApp
         private void tallozButton_Click(object sender, EventArgs e)
         {
             doneLabel.Visible = false;
-            OpenFileDialog tallozDialog = MPFOpenFileDialogFactory.CreateDialog();
+            OpenFileDialog tallozDialog = new MPFOpenFileDialogFactory().CreateDialog();
             if (tallozDialog.ShowDialog() == DialogResult.OK)
             {
                 mitTextBox.Text = tallozDialog.FileName;
@@ -228,22 +205,12 @@ namespace MPFConverterApp
 
         private void networkFolderBrowseButton_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog networkFolderBrowserDialog = new FolderBrowserDialog();
-            networkFolderBrowserDialog.Description = "Válassz célmappát:";
             string baseSelectedPath = configHandler.getNetworkConfigForSelectedNetwork().BaseTargetFolder;
-            try
+            FolderBrowserDialog networkDialog = new NetworkFolderBrowserDialogFactory().CreateDialogFor(baseSelectedPath);
+            if (!"NETWORK_FOLDER_NOT_FOUND".Equals(networkDialog.Tag) && networkDialog.ShowDialog() == DialogResult.OK)
             {
-                networkFolderBrowserDialog.SelectedPath = FolderUtil.getFirstChildFolderIfExist(baseSelectedPath);
-            }
-            catch (DirectoryNotFoundException)
-            {
-                MessageBox.Show("A megadott hálózati elérési útvonal nem létezik.", "Érvénytelen útvonal", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-            if (networkFolderBrowserDialog.ShowDialog() == DialogResult.OK)
-            {
-                int startCharacterIndexOfFolder = networkFolderBrowserDialog.SelectedPath.LastIndexOf(baseSelectedPath) + baseSelectedPath.Length;
-                string targetFolderText = Path.GetDirectoryName(networkFolderBrowserDialog.SelectedPath + "\\").Substring(startCharacterIndexOfFolder);
+                int startCharacterIndexOfFolder = networkDialog.SelectedPath.LastIndexOf(baseSelectedPath) + baseSelectedPath.Length;
+                string targetFolderText = Path.GetDirectoryName(networkDialog.SelectedPath + "\\").Substring(startCharacterIndexOfFolder);
                 configHandler.getNetworkConfigForSelectedNetwork().TargetFolder.Text = targetFolderText;
             }
         }

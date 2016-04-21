@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="Configuration\ConfigurationHandler.cs" />
     <Compile Include="Configuration\NetworkMachineConfiguration.cs" />
+    <Compile Include="Forms\NetworkFolderBrowserDialogFactory.cs" />
     <Compile Include="Forms\NetworkFormControlFactory.cs" />
     <Compile Include="Util\ControlUtil.cs" />
     <Compile Include="Copy\FileCopier.cs" />
