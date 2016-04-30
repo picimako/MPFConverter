@@ -4,8 +4,9 @@ namespace MPFConverterApp
 {
     class FolderUtil
     {
-        public static void CreateDirectoryIfNotExists(string path, Logger logger)
+        public static void CreateDirectoryIfNotExists(string path)
         {
+            Logger logger = Logger.Instance;
             logger.LogComment("A következő útvonal elérhetőségének vizsgálata: " + path);
             if (!Directory.Exists(path))
             {

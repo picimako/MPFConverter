@@ -4,23 +4,27 @@ namespace MPFConverterApp
 {
     class Logger
     {
-        private static Logger LOGGER;
+        private static Logger INSTANCE;
         private static string logFilePath = Settings.Instance.ApplicationStartupPath + @"\log.txt";
         private static TextWriter writer;
 
         private Logger() { }
 
-        public static Logger logger
+        public static Logger Instance
         {
             get
             {
-                if (LOGGER == null)
+                if (INSTANCE == null)
                 {
-                    LOGGER = new Logger();
+                    INSTANCE = new Logger();
                 }
-                writer = new StreamWriter(logFilePath, false);
-                return LOGGER;
+                return INSTANCE;
             }
+        }
+
+        public void Open()
+        {
+            writer = new StreamWriter(logFilePath, false);
         }
 
         public void LogComment(string comment)
@@ -28,7 +32,7 @@ namespace MPFConverterApp
             writer.WriteLine(comment);
         }
 
-        public void CloseLogger()
+        public void Close()
         {
             writer.Close();
         }

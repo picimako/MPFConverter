@@ -13,7 +13,7 @@ namespace MPFConverterApp
 
         private Label doneLabel;
         private CheckBox gqCheckBox;
-        private Logger logger;
+        private Logger logger = Logger.Instance;
         private string networkTargetFolder;
 
         public Converter(Label doneLabel, CheckBox gqCheckBox)
@@ -25,18 +25,18 @@ namespace MPFConverterApp
         public void ConvertFromMpfToNct(string mpfFileParam, string nctFileParam, NCTConfiguration config)
         {
             this.networkTargetFolder = config.NetworkTargetFolder;
-            logger = Logger.logger;
+            logger.Open();
             logger.LogComment("Program azonosító: " + config.ProgramId);
             char[] lineAsCharacters = null;
             string mpfFile = mpfFileParam;
-            FolderUtil.CreateDirectoryIfNotExists(MPF_FOLDER, logger);
+            FolderUtil.CreateDirectoryIfNotExists(MPF_FOLDER);
             //köztes fájl
-            string nctFile = MPF_FOLDER + Path.GetFileName(nctFileParam);
+            string middleNctFile = MPF_FOLDER + Path.GetFileName(nctFileParam);
 
             using (StreamReader reader = new StreamReader(mpfFile))
             {
                 String line;
-                TextWriter writer = new StreamWriter(nctFile, false);
+                TextWriter writer = new StreamWriter(middleNctFile, false);
                 writer.WriteLine(String.Format("%O{0} ({1})", config.ProgramId, config.Comment));
                 WriteOsztofejValue(writer, config.Osztofej, config.INeeded);
                 WriteGQOn(writer);
@@ -53,7 +53,7 @@ namespace MPFConverterApp
                 writer.Write("%");
                 writer.Close();
 
-                ConvertNctToNewNct(nctFile);
+                ConvertMiddleNctToFinalNct(middleNctFile);
             }
         }
 
@@ -139,7 +139,7 @@ namespace MPFConverterApp
          ///"G43 H<a T utáni szám>" után lehet, de nem feltétlen szükségeltetik szóköz a Zxx.xx elé
          ///A T után szerepelhet 2 jegyű szám is.
         ///</summary>
-        private void ConvertNctToNewNct(string initialNctFile)
+        private void ConvertMiddleNctToFinalNct(string initialNctFile)
         {
             string newNctFile = NCT_FOLDER + Path.GetFileNameWithoutExtension(initialNctFile) + (gqCheckBox.Checked ? "_f" : "") + Path.GetExtension(initialNctFile);
             bool joMinta = false;
@@ -149,7 +149,7 @@ namespace MPFConverterApp
             using (StreamReader reader = new StreamReader(initialNctFile))
             {
                 string line;
-                FolderUtil.CreateDirectoryIfNotExists(NCT_FOLDER, logger);
+                FolderUtil.CreateDirectoryIfNotExists(NCT_FOLDER);
                 logger.LogComment("A végleges fájl ide kerül létrehozásra: " + newNctFile);
                 TextWriter writer = new StreamWriter(newNctFile, false);
 
@@ -235,7 +235,7 @@ namespace MPFConverterApp
             logger.LogComment("Köztes fájl törlése.");
             File.Delete(initialNctFile);
             FileCopier.CopyNCTFileToNetworkFolder(@networkTargetFolder, newNctFile, logger);
-            logger.CloseLogger();
+            logger.Close();
         }
     }
 }
