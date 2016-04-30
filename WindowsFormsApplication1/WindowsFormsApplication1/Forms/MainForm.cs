@@ -167,7 +167,7 @@ namespace MPFConverterApp
                 validator.IsProgramIdValid()
                 && validator.IsOsztofejAngleValid()
                 && validator.AreKiallasValuesValid(xValueBox, yValueBox, zValueBox)
-                && validator.IsPathNotEmpty(mitTextBox)
+                && !validator.IsEmpty(mitTextBox.Text)
                 && File.Exists(mitTextBox.Text)) ? true : false;
         }
 

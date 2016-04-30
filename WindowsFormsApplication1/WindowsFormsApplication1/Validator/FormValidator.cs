@@ -7,46 +7,51 @@ namespace MPFConverterApp
     class FormValidator
     {
         private ConfigurationControls controls;
-        public int ProgramId;
+        private int programId;
+        public int ProgramId
+        {
+            get
+            {
+                return programId;
+            }
+            set
+            {
+                programId = value;
+            }
+        }
 
         public FormValidator(ConfigurationControls configurationControls)
         {
             controls = configurationControls;
         }
 
-        public bool IsPathNotEmpty(TextBox sourceBox)
-        {
-            return !sourceBox.Text.Equals(String.Empty);
-        }
-
         public bool IsProgramIdValid()
         {
             bool programIdValid = false;
-            programIdValid = (!String.Empty.Equals(controls.ID.Text)
+            programIdValid =
+                (!IsEmpty(controls.ID.Text)
                 && !controls.ID.Text.StartsWith("0")
                 && !controls.ID.Text.StartsWith("-")
                 && controls.ID.Text.Length == 4
-                && IsIdContainNumbersOnly()) ? true : false;
+                && IsIdInteger()) ? true : false;
             return programIdValid;
         }
 
-        public bool IsIdContainNumbersOnly()
+        public bool IsIdInteger()
         {
-            return Int32.TryParse(controls.ID.Text, out ProgramId);
+            return Int32.TryParse(controls.ID.Text, out programId);
         }
 
         public bool IsOsztofejAngleValid()
         {
             double osztofejAngle;
-            if (!controls.Osztofej.Checked
+            bool osztofejAngleValid = false;
+            osztofejAngleValid =(!controls.Osztofej.Checked
                 || controls.Osztofej.Checked
-                    && controls.OsztofejValue.Text != String.Empty
-                    && Double.TryParse(controls.OsztofejValue.Text.Replace(".", ","), out osztofejAngle)
-                    && Math.Abs(osztofejAngle) <= 360)
-            {
-                return true;
-            }
-            return false;
+                    && !IsEmpty(controls.OsztofejValue.Text)
+                    && IsDoubleTypeNumber(controls.OsztofejValue.Text, out osztofejAngle)
+                    && Math.Abs(osztofejAngle) <= 360) ? true : false;
+            return osztofejAngleValid;
         }
 
         public bool AreKiallasValuesValid(params TextBox[] valueBoxes)
@@ -58,15 +63,28 @@ namespace MPFConverterApp
 
         public bool IsKiallasValueValidFor(TextBox valueBox)
         {
-            double commonKiallasValue;
-            if (!controls.Kiallas.Checked
+            bool commonKiallasValueValid = false;
+            commonKiallasValueValid = (!controls.Kiallas.Checked
                 || controls.Kiallas.Checked
-                    && valueBox.Text != String.Empty
-                    && Double.TryParse(valueBox.Text.Replace(".", ","), out commonKiallasValue))
-            {
-                return true;
-            }
-            return false;
+                    && !IsEmpty(valueBox.Text)
+                    && IsDoubleTypeNumber(valueBox.Text)) ? true : false;
+            return commonKiallasValueValid;
+        }
+
+        public bool IsEmpty(string text)
+        {
+            return String.Empty.Equals(text);
+        }
+
+        private bool IsDoubleTypeNumber(string text, out double value)
+        {
+            return Double.TryParse(text.Replace(".", ","), out value);
+        }
+
+        private bool IsDoubleTypeNumber(string text)
+        {
+            double value;
+            return Double.TryParse(text.Replace(".", ","), out value);
         }
     }
 }
