@@ -35,14 +35,12 @@ namespace MPFConverterApp
             logger.Open();
             logger.LogComment("Program azonosító: " + NCTConfiguration.ProgramId);
             char[] lineAsCharacters = null;
-            string mpfFile = mpfFileParam;
             FolderUtil.CreateDirectoryIfNotExists(MPF_FOLDER);
-            //köztes fájl
             string middleNctFile = MPF_FOLDER + Path.GetFileName(nctFileParam);
 
-            using (StreamReader reader = new StreamReader(mpfFile))
+            using (StreamReader reader = new StreamReader(mpfFileParam))
             {
-                String line;
+                string line;
                 TextWriter writer = new StreamWriter(middleNctFile, false);
                 writer.WriteLine(String.Format("%O{0} ({1})", NCTConfiguration.ProgramId, NCTConfiguration.Comment));
                 WriteOsztofejValue(writer, NCTConfiguration.Osztofej, NCTConfiguration.INeeded);
@@ -64,7 +62,7 @@ namespace MPFConverterApp
             }
         }
 
-        private string PutSemicolonedPartOfRowsIntoBrackets(char[] lineAsCharacters, String line)
+        private string PutSemicolonedPartOfRowsIntoBrackets(char[] lineAsCharacters, string line)
         {
             string final = "";
             lineAsCharacters = line.ToCharArray();
