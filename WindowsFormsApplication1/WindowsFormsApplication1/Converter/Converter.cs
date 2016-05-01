@@ -11,6 +11,10 @@ namespace MPFConverterApp
         private const string NCT_FOLDER = @"D:\NCT\";
         private const string G30VALUE = "G30ZI0P4"; //to be changed to G650
         private const string M30 = "M30";
+        private const string T = "T";
+        private const string M6 = "M6";
+        private const string S = "S";
+        private const string G = "G";
 
         private Label doneLabel;
         private CheckBox gqCheckBox;
@@ -104,7 +108,7 @@ namespace MPFConverterApp
         //Before M30
         private void WriteGQOffAtFileEnd(TextWriter writer, string final)
         {
-            if (gqCheckBox.Checked && "M30".Equals(final))
+            if (gqCheckBox.Checked && M30.Equals(final))
             {
                 logger.LogComment("GQ záróérték kiírása: " + Settings.Instance.GQOff);
                 writer.WriteLine(Settings.Instance.GQOff);
@@ -117,7 +121,7 @@ namespace MPFConverterApp
         //Ha az egyiket bepipálom, akkor a másik inaktív legyen
         private void WriteXYZ(TextWriter writer, Kiallas kiallas, string final)
         {
-            if (kiallas.Enabled && "M30".Equals(final))
+            if (kiallas.Enabled && M30.Equals(final))
             {
                 logger.LogComment(String.Format("XYZ értékek kiírása. X: {0}, Y: {1}, Z: {2}", kiallas.X, kiallas.Y, kiallas.Z));
                 writer.WriteLine(String.Format("G0 Z{0}", kiallas.Z));
@@ -153,7 +157,7 @@ namespace MPFConverterApp
         {
             string finalNctFile = NCT_FOLDER + Path.GetFileNameWithoutExtension(middleNctFile) + (gqCheckBox.Checked ? "_f" : "") + Path.GetExtension(middleNctFile);
             bool joMinta = false;
-            String nextSignToLookFor = "T";
+            string nextSignToLookFor = T;
             int tErteke = -1;
 
             using (StreamReader reader = new StreamReader(middleNctFile))
@@ -170,15 +174,15 @@ namespace MPFConverterApp
                         if (nextSignToLookFor.Equals("A"))
                         {
                             writer.WriteLine(line);
-                            nextSignToLookFor = "T";
+                            nextSignToLookFor = T;
                             continue;
                         }
 
-                        if (line.Contains("T"))
+                        if (line.Contains(T))
                         {
                             joMinta = true;
-                            Int32.TryParse(line.Substring(line.LastIndexOf("T") + 1), out tErteke);
-                            nextSignToLookFor = "M6";
+                            Int32.TryParse(line.Substring(line.LastIndexOf(T) + 1), out tErteke);
+                            nextSignToLookFor = M6;
                         }
                         writer.WriteLine(line);
                     }
@@ -186,19 +190,19 @@ namespace MPFConverterApp
                     {
                         switch (nextSignToLookFor)
                         {
-                            case "M6":
-                                if (IsLineContainLetter("M6", ref nextSignToLookFor, line, ref joMinta, writer))
+                            case M6:
+                                if (IsLineContainLetter(M6, ref nextSignToLookFor, line, ref joMinta, writer))
                                 {
                                     continue;
                                 }
                                 break;
-                            case "S":
-                                if (IsLineContainLetter("S", ref nextSignToLookFor, line, ref joMinta, writer))
+                            case S:
+                                if (IsLineContainLetter(S, ref nextSignToLookFor, line, ref joMinta, writer))
                                 {
                                     continue;
                                 }
                                 break;
-                            case "G":
+                            case G:
                                 WriteValuesAccordingToLineContainsG(ref nextSignToLookFor, line, ref joMinta, tErteke, writer);
                                 break;
                         }
@@ -215,7 +219,7 @@ namespace MPFConverterApp
             writer.WriteLine(line);
             if (line.Contains(letter))
             {
-                nextSignToLookFor = "M6".Equals(letter) ? "S" : "G";
+                nextSignToLookFor = M6.Equals(letter) ? S : G;
                 return true;
             }
             return joMinta = false;
@@ -224,7 +228,7 @@ namespace MPFConverterApp
         //TODO: A G43-as sor után közvetlenül egy M8-at (hűtővíz bekapcsolás) beilleszteni (checkbox-ból választható legyen). Az összes TM6SG előfordulás esetén
         private void WriteValuesAccordingToLineContainsG(ref string nextSignToLookFor, string line, ref bool joMinta, int tErteke, TextWriter writer)
         {
-            if (line.Contains("G"))
+            if (line.Contains(G))
             {
                 int lastIndexOfZ = line.LastIndexOf("Z");
                 string sor1, sor2;
