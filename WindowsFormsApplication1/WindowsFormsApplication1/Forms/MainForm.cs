@@ -175,10 +175,15 @@ namespace MPFConverterApp
         {
             //TODO: check why this is there, and whether this is necessary
             Osztofej osztofej = new Osztofej(osztofejBox.Checked, osztofejValueBox.Text);
+
             string networkTargetFolder =
                 configHandler.GetNetworkConfigForSelectedNetwork().BaseTargetFolder +
                 configHandler.GetNetworkConfigForSelectedNetwork().TargetFolder.Text;
-            new Converter(doneLabel, gqCheckBox).ConvertFromMpfToNct(mitTextBox.Text, hovaTextBox.Text, configHandler.GetNCTConfigForSelectedNetwork());
+
+            Converter converter = new Converter(doneLabel, gqCheckBox);
+            converter.NCTConfiguration = configHandler.GetNCTConfigForSelectedNetwork();
+            converter.ConvertFromMpfToNct(mitTextBox.Text, hovaTextBox.Text);
+
             doAfterCreation();
         }
 

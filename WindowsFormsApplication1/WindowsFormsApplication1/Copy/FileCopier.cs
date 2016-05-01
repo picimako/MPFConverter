@@ -6,19 +6,23 @@ namespace MPFConverterApp
 {
     class FileCopier
     {
-        public static void CopyNCTFileToNetworkFolder(string networkTargetFolder, string newNctFile, Logger logger)
+        public static void CopyNCTFileToNetworkFolder(string networkTargetFolder, string finalNctFile)
         {
+            Logger logger = Logger.Instance;
             if (!Directory.Exists(networkTargetFolder))
             {
                 Show("A hálózaton levő mappa nem létezik vagy a számítógép nem elérhető!");
                 return;
             }
-            string finalNetworkTarget = networkTargetFolder + "\\" + Path.GetFileName(newNctFile);
+            string finalNetworkTarget = networkTargetFolder + "\\" + Path.GetFileName(finalNctFile);
             logger.LogComment("Az elkészített NCT fájl [" + finalNetworkTarget + "] másolásának megkezdése a hálózatra.");
 
             if (File.Exists(finalNetworkTarget))
             {
-                DialogResult result = Show("A fájl már létezik a célhelyen. Felül szeretnéd írni?", "Értesítés.", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                DialogResult result = Show("A fájl már létezik a célhelyen. Felül szeretnéd írni?",
+                    "Értesítés.",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Exclamation);
                 if (result == DialogResult.Yes)
                 {
                     File.Delete(finalNetworkTarget);
@@ -28,7 +32,7 @@ namespace MPFConverterApp
                     return;
                 }
             }
-            File.Copy(newNctFile, finalNetworkTarget);
+            File.Copy(finalNctFile, finalNetworkTarget);
             logger.LogComment("Az elkészített NCT fájl sikeresen átmásolva a megadott hálózati helyre.");
         }
     }
