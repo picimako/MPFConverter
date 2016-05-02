@@ -19,7 +19,6 @@ namespace MPFConverterApp
         private Label doneLabel;
         private CheckBox gqCheckBox;
         private Logger logger = Logger.Instance;        
-        private string networkTargetFolder;
 
         public NCTConfiguration NCTConfiguration { get; set; }
 
@@ -31,7 +30,6 @@ namespace MPFConverterApp
 
         public void ConvertFromMpfToNct(string mpfFileParam, string nctFileParam)
         {
-            this.networkTargetFolder = NCTConfiguration.NetworkTargetFolder;
             logger.Open();
             logger.LogComment("Program azonosító: " + NCTConfiguration.ProgramId);
             char[] lineAsCharacters = null;
@@ -43,17 +41,17 @@ namespace MPFConverterApp
                 string line;
                 TextWriter writer = new StreamWriter(middleNctFile, false);
                 writer.WriteLine(String.Format("%O{0} ({1})", NCTConfiguration.ProgramId, NCTConfiguration.Comment));
-                WriteOsztofejValue(writer, NCTConfiguration.Osztofej, NCTConfiguration.INeeded);
+                WriteOsztofejValue(writer);
                 WriteGQOn(writer);
                 //while ((line = reader.ReadLine()) != null)
                 while (!M30.Equals(line = reader.ReadLine()))
                 {
                     string final = PutSemicolonedPartOfRowsIntoBrackets(lineAsCharacters, line);
                     WriteGQOffAtFileEnd(writer, final);
-                    WriteXYZ(writer, NCTConfiguration.Kiallas, final);
+                    WriteXYZ(writer, final);
                     writer.WriteLine(final);
                 }
-                WriteG30BeforeM30(writer, NCTConfiguration.G30Needed);
+                WriteG30BeforeM30(writer);
                 writer.WriteLine(M30);
                 writer.Write("%");
                 writer.Close();
@@ -83,12 +81,13 @@ namespace MPFConverterApp
             return final;
         }
 
-        private void WriteOsztofejValue(TextWriter writer, Osztofej osztofej, bool INeeded)
+        private void WriteOsztofejValue(TextWriter writer)
         {
+            Osztofej osztofej = NCTConfiguration.Osztofej;
             if (osztofej.Enabled)
             {
                 logger.LogComment("Osztófej érték: A" + osztofej.Value);
-                writer.WriteLine("A" + (INeeded ? "I" : "") + osztofej.Value);
+                writer.WriteLine("A" + (NCTConfiguration.INeeded ? "I" : "") + osztofej.Value);
             }
         }
 
@@ -117,8 +116,9 @@ namespace MPFConverterApp
         //Közvetlenül M30 elé.
         //Vagy ez (G0) vagy a G650 kell, hogy bekerüljön
         //Ha az egyiket bepipálom, akkor a másik inaktív legyen
-        private void WriteXYZ(TextWriter writer, Kiallas kiallas, string final)
+        private void WriteXYZ(TextWriter writer, string final)
         {
+            Kiallas kiallas = NCTConfiguration.Kiallas;
             if (kiallas.Enabled && M30.Equals(final))
             {
                 logger.LogComment(String.Format("XYZ értékek kiírása. X: {0}, Y: {1}, Z: {2}", kiallas.X, kiallas.Y, kiallas.Z));
@@ -127,9 +127,9 @@ namespace MPFConverterApp
             }
         }
 
-        private void WriteG30BeforeM30(TextWriter writer, bool g30Checked)
+        private void WriteG30BeforeM30(TextWriter writer)
         {
-            if (g30Checked)
+            if (NCTConfiguration.G30Needed)
             {
                 writer.WriteLine(G30VALUE);
             }
@@ -247,7 +247,7 @@ namespace MPFConverterApp
         {
             logger.LogComment("Köztes fájl törlése.");
             File.Delete(middleNctFile);
-            FileCopier.CopyNCTFileToNetworkFolder(@networkTargetFolder, newNctFile);
+            FileCopier.CopyNCTFileToNetworkFolder(@NCTConfiguration.NetworkTargetFolder, newNctFile);
             logger.Close();
         }
     }
