@@ -43,10 +43,10 @@ namespace MPFConverterApp
         public void ConvertMiddleNctToFinalNct(string middleNctFile)
         {
             string finalNctFile = NCT_FOLDER + Path.GetFileNameWithoutExtension(middleNctFile)
-                + (gqCheckBox.Checked ? "_f" : "") + Path.GetExtension(middleNctFile);
-            bool joMinta = false;
+                + FinalFilePostFix() + Path.GetExtension(middleNctFile);
+            bool isPatternCorrect = false;
             string nextSignToLookFor = T;
-            int tErteke = -1;
+            int valueOfT = -1;
 
             using (StreamReader reader = new StreamReader(middleNctFile))
             {
@@ -57,7 +57,7 @@ namespace MPFConverterApp
 
                 while ((line = reader.ReadLine()) != null)
                 {
-                    if (!joMinta)
+                    if (!isPatternCorrect)
                     {
                         if (nextSignToLookFor.Equals("A"))
                         {
@@ -68,8 +68,8 @@ namespace MPFConverterApp
 
                         if (line.Contains(T))
                         {
-                            joMinta = true;
-                            Int32.TryParse(line.Substring(line.LastIndexOf(T) + 1), out tErteke);
+                            isPatternCorrect = true;
+                            Int32.TryParse(line.Substring(line.LastIndexOf(T) + 1), out valueOfT);
                             nextSignToLookFor = M6;
                         }
                         writer.WriteLine(line);
@@ -79,19 +79,19 @@ namespace MPFConverterApp
                         switch (nextSignToLookFor)
                         {
                             case M6:
-                                if (IsLineContainLetter(M6, ref nextSignToLookFor, line, ref joMinta, writer))
+                                if (IsLineContainLetter(M6, ref nextSignToLookFor, line, ref isPatternCorrect, writer))
                                 {
                                     continue;
                                 }
                                 break;
                             case S:
-                                if (IsLineContainLetter(S, ref nextSignToLookFor, line, ref joMinta, writer))
+                                if (IsLineContainLetter(S, ref nextSignToLookFor, line, ref isPatternCorrect, writer))
                                 {
                                     continue;
                                 }
                                 break;
                             case G:
-                                WriteValuesAccordingToLineContainsG(ref nextSignToLookFor, line, ref joMinta, tErteke, writer);
+                                WriteValuesAccordingToLineContainsG(ref nextSignToLookFor, line, ref isPatternCorrect, valueOfT, writer);
                                 break;
                         }
                     }
@@ -100,6 +100,11 @@ namespace MPFConverterApp
                 doneLabel.Visible = true;
             }
             Finalize(middleNctFile, finalNctFile);
+        }
+
+        private string FinalFilePostFix()
+        {
+            return gqCheckBox.Checked ? "_f" : "";
         }
 
         private bool IsLineContainLetter(string letter, ref string nextSignToLookFor, string line, ref bool joMinta, TextWriter writer)
