@@ -87,7 +87,7 @@ namespace MPFConverterApp
             if (osztofej.Enabled)
             {
                 logger.LogComment("Osztófej érték: A" + osztofej.Value);
-                writer.WriteLine("A" + (NCTConfiguration.INeeded ? "I" : "") + osztofej.Value);
+                writer.WriteLine(String.Format("A{0}{1}", NCTConfiguration.INeeded ? "I" : "", osztofej.Value));
             }
         }
 

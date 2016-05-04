@@ -7,11 +7,16 @@ namespace MPFConverterApp
     class MiddleToFinalNctConverter
     {
         private const string NCT_FOLDER = @"D:\NCT\";
+        private const string NEW_PATTERN = "A";
         private const string T = "T";
         private const string M6 = "M6";
         private const string S = "S";
         private const string G = "G";
-        
+
+        private int valueOfT;
+        private string nextSignToLookFor;
+        private bool isPatternCorrect;
+
         private Label doneLabel;
         private CheckBox gqCheckBox;
         private Logger logger = Logger.Instance;
@@ -44,9 +49,9 @@ namespace MPFConverterApp
         {
             string finalNctFile = NCT_FOLDER + Path.GetFileNameWithoutExtension(middleNctFile)
                 + FinalFilePostFix() + Path.GetExtension(middleNctFile);
-            bool isPatternCorrect = false;
-            string nextSignToLookFor = T;
-            int valueOfT = -1;
+            valueOfT = -1;
+            isPatternCorrect = false;
+            nextSignToLookFor = T;
 
             using (StreamReader reader = new StreamReader(middleNctFile))
             {
@@ -59,7 +64,7 @@ namespace MPFConverterApp
                 {
                     if (!isPatternCorrect)
                     {
-                        if (nextSignToLookFor.Equals("A"))
+                        if (nextSignToLookFor.Equals(NEW_PATTERN))
                         {
                             writer.WriteLine(line);
                             nextSignToLookFor = T;
@@ -79,19 +84,19 @@ namespace MPFConverterApp
                         switch (nextSignToLookFor)
                         {
                             case M6:
-                                if (IsLineContainLetter(M6, ref nextSignToLookFor, line, ref isPatternCorrect, writer))
+                                if (IsLineContainLetter(M6, line, writer))
                                 {
                                     continue;
                                 }
                                 break;
                             case S:
-                                if (IsLineContainLetter(S, ref nextSignToLookFor, line, ref isPatternCorrect, writer))
+                                if (IsLineContainLetter(S, line, writer))
                                 {
                                     continue;
                                 }
                                 break;
                             case G:
-                                WriteValuesAccordingToLineContainsG(ref nextSignToLookFor, line, ref isPatternCorrect, valueOfT, writer);
+                                WriteValuesAccordingToLineContainsG(line, writer);
                                 break;
                         }
                     }
@@ -107,7 +112,7 @@ namespace MPFConverterApp
             return gqCheckBox.Checked ? "_f" : "";
         }
 
-        private bool IsLineContainLetter(string letter, ref string nextSignToLookFor, string line, ref bool joMinta, TextWriter writer)
+        private bool IsLineContainLetter(string letter, string line, TextWriter writer)
         {
             writer.WriteLine(line);
             if (line.Contains(letter))
@@ -115,27 +120,27 @@ namespace MPFConverterApp
                 nextSignToLookFor = M6.Equals(letter) ? S : G;
                 return true;
             }
-            return joMinta = false;
+            return isPatternCorrect = false;
         }
 
         //TODO: A G43-as sor után közvetlenül egy M8-at (hűtővíz bekapcsolás) beilleszteni (checkbox-ból választható legyen). Az összes TM6SG előfordulás esetén
-        private void WriteValuesAccordingToLineContainsG(ref string nextSignToLookFor, string line, ref bool joMinta, int tErteke, TextWriter writer)
+        private void WriteValuesAccordingToLineContainsG(string line, TextWriter writer)
         {
             if (line.Contains(G))
             {
                 int lastIndexOfZ = line.LastIndexOf("Z");
-                string sor1, sor2;
-                sor2 = "G43 H" + tErteke + " " + line.Substring(lastIndexOfZ);
-                sor1 = line.Remove(lastIndexOfZ);
-                writer.WriteLine(sor1);
-                writer.WriteLine(sor2);
-                nextSignToLookFor = "A";
+                string line1, line2;
+                line2 = String.Format("G43 H{0} {1}", valueOfT, line.Substring(lastIndexOfZ));
+                line1 = line.Remove(lastIndexOfZ);
+                writer.WriteLine(line1);
+                writer.WriteLine(line2);
+                nextSignToLookFor = NEW_PATTERN;
             }
             else
             {
                 writer.WriteLine(line);
             }
-            joMinta = false;
+            isPatternCorrect = false;
         }
 
         private void Finalize(string middleNctFile, string newNctFile)
