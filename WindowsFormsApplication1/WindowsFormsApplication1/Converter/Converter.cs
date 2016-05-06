@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.IO;
+using System.Text.RegularExpressions;
 using MPFConverterApp.Configuration;
 
 namespace MPFConverterApp
@@ -14,6 +15,7 @@ namespace MPFConverterApp
         private Label doneLabel;
         private CheckBox gqCheckBox;
         private Logger logger = Logger.Instance;
+        private Regex semiColonedRowPattern = new Regex(@"(\w*)(;)(.*)");
 
         public NCTConfiguration NCTConfiguration { get; set; }
 
@@ -56,21 +58,13 @@ namespace MPFConverterApp
 
         private string PutSemicolonedPartOfRowsIntoBrackets(string line)
         {
-            string final = "";
-            char[]  lineAsCharacters = line.ToCharArray();
-            //A ; karakter indexe
-            int indexOfFirstBracket = line.LastIndexOf(";");
-            if (indexOfFirstBracket != -1)
+            string final = line;
+            Match match = semiColonedRowPattern.Match(line);
+            if (match.Success)
             {
                 logger.LogComment("Aktuális sor zárójelezése: " + line);
-                lineAsCharacters[indexOfFirstBracket] = '('; //a ; kicserélése (-re
-                final = new string(lineAsCharacters);
-                final += ")"; //a sor végleges változata egy )-et kap a sor végére
+                final = String.Format("{0}{1}", match.Groups[1], "(" + match.Groups[3] + ")");
                 logger.LogComment("Aktuális sor zárójelekkel: " + final);
-            }
-            else
-            {
-                final = new string(lineAsCharacters);
             }
             return final;
         }
