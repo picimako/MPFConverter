@@ -23,7 +23,7 @@ This application includes a couple of convenient features to modify the final NC
 - Make command values enclosed in brackets in rows containing the **;** character. For example:
     - Initial: ```N7;  DX=   .00000```
     - Final: ```N7(  DX=   .00000)```
-- Add ```G30ZI0P4``` before ```M30``` (at the end of the file)
+- Add ```G650``` before ```M30``` (at the end of the file)
 - Add a **%** character in a new row after ```M30```
 - Add G..Q.. to the end of the file when HSHP is checked on the UI
     - *This is currently not working. Will be changed in a later version.*
@@ -32,7 +32,7 @@ This application includes a couple of convenient features to modify the final NC
 
 ##### Notes
 
-- ```G...Q...``` values are defined in the first row of ```settings.txt``` in **<ON>#<OFF>** pattern
+- ```G...Q...``` values are defined in the first row of ```settings.txt``` in **[ON]#[OFF]** pattern
 
 # Further improvements
 

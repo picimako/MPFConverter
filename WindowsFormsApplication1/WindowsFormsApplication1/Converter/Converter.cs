@@ -9,7 +9,7 @@ namespace MPFConverterApp
     class Converter
     {
         private const string MPF_FOLDER = @"D:\MPF\";
-        private const string G30VALUE = "G30ZI0P4"; //to be changed to G650
+        private const string G650VALUE = "G650";
         private const string M30 = "M30";
 
         private Label doneLabel;
@@ -46,7 +46,7 @@ namespace MPFConverterApp
                     WriteXYZ(writer, final);
                     writer.WriteLine(final);
                 }
-                WriteG30BeforeM30(writer);
+                WriteG650BeforeM30(writer);
                 WriteFileClosing(writer);
                 writer.Close();
 
@@ -121,11 +121,11 @@ namespace MPFConverterApp
             }
         }
 
-        private void WriteG30BeforeM30(TextWriter writer)
+        private void WriteG650BeforeM30(TextWriter writer)
         {
-            if (NCTConfiguration.G30Needed)
+            if (NCTConfiguration.G650Needed)
             {
-                writer.WriteLine(G30VALUE);
+                writer.WriteLine(G650VALUE);
             }
         }
 

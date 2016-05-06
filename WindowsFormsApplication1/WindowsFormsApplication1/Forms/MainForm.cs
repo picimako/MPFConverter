@@ -46,7 +46,7 @@ namespace MPFConverterApp
             controls.KiallasZ = zValueBox;
             controls.Osztofej = osztofejBox;
             controls.OsztofejValue = osztofejValueBox;
-            controls.G30 = g30CheckBox;
+            controls.G650 = g650CheckBox;
         }
 
         private void setNetworkMachines()
@@ -128,7 +128,7 @@ namespace MPFConverterApp
                 setKeszitButton();
                 configHandler.GetNCTConfigForSelectedNetwork().Kiallas.Z = zValueBox.Text;
             };
-            g30CheckBox.CheckedChanged += (sender, e) => { configHandler.GetNCTConfigForSelectedNetwork().G30Needed = g30CheckBox.Checked; };
+            g650CheckBox.CheckedChanged += (sender, e) => { configHandler.GetNCTConfigForSelectedNetwork().G650Needed = g650CheckBox.Checked; };
         }
 
         private void setFormItemsStatus()

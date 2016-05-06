@@ -62,7 +62,7 @@
             this.yValueBox = new System.Windows.Forms.TextBox();
             this.kiallasGroupBox = new System.Windows.Forms.GroupBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.g30CheckBox = new System.Windows.Forms.CheckBox();
+            this.g650CheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.idBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -383,24 +383,24 @@
             // 
             // groupBox6
             // 
-            this.groupBox6.Controls.Add(this.g30CheckBox);
+            this.groupBox6.Controls.Add(this.g650CheckBox);
             this.groupBox6.Location = new System.Drawing.Point(33, 229);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(85, 35);
             this.groupBox6.TabIndex = 34;
             this.groupBox6.TabStop = false;
             // 
-            // g30CheckBox
+            // g650CheckBox
             // 
-            this.g30CheckBox.AutoSize = true;
-            this.g30CheckBox.Location = new System.Drawing.Point(6, 13);
-            this.g30CheckBox.Name = "g30CheckBox";
-            this.g30CheckBox.Size = new System.Drawing.Size(75, 17);
-            this.g30CheckBox.TabIndex = 0;
-            this.g30CheckBox.Text = "G30ZI0P4";
-            this.g30CheckBox.UseVisualStyleBackColor = true;
+            this.g650CheckBox.AutoSize = true;
+            this.g650CheckBox.Location = new System.Drawing.Point(6, 13);
+            this.g650CheckBox.Name = "g650CheckBox";
+            this.g650CheckBox.Size = new System.Drawing.Size(52, 17);
+            this.g650CheckBox.TabIndex = 0;
+            this.g650CheckBox.Text = "G650";
+            this.g650CheckBox.UseVisualStyleBackColor = true;
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -419,7 +419,7 @@
             this.Controls.Add(this.hovaTextBox);
             this.Controls.Add(this.mitTextBox);
             this.Controls.Add(this.keszitButton);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Fájlgeneráló";
             ((System.ComponentModel.ISupportInitialize)(this.idBox)).EndInit();
             this.groupBox1.ResumeLayout(false);
@@ -475,7 +475,7 @@
         private System.Windows.Forms.TextBox yValueBox;
         private System.Windows.Forms.GroupBox kiallasGroupBox;
         private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.CheckBox g30CheckBox;
+        private System.Windows.Forms.CheckBox g650CheckBox;
     }
 }
 

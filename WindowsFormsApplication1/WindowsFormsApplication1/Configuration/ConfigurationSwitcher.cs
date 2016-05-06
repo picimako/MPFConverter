@@ -22,7 +22,7 @@ namespace MPFConverterApp
             configuration.NetworkTargetFolder = networkTargetFolder;
             configuration.Kiallas = new Kiallas(controls.Kiallas.Checked,
                 controls.KiallasX.Text, controls.KiallasY.Text, controls.KiallasZ.Text);
-            configuration.G30Needed = controls.G30.Checked;
+            configuration.G650Needed = controls.G650.Checked;
         }
 
         private void SaveId(NCTConfiguration configuration)
@@ -40,7 +40,7 @@ namespace MPFConverterApp
             controls.ID.Text = configuration.ProgramId.ToString();
             ReadControlsForOsztofej(configuration);
             ReadControlsForKiallas(configuration);
-            controls.G30.Checked = configuration.G30Needed;
+            controls.G650.Checked = configuration.G650Needed;
         }
 
         private void ReadControlsForOsztofej(NCTConfiguration configuration)
