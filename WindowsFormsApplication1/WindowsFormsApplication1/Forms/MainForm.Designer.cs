@@ -63,6 +63,8 @@
             this.kiallasGroupBox = new System.Windows.Forms.GroupBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.g650CheckBox = new System.Windows.Forms.CheckBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.m8CheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.idBox)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -70,6 +72,7 @@
             this.groupBox5.SuspendLayout();
             this.kiallasGroupBox.SuspendLayout();
             this.groupBox6.SuspendLayout();
+            this.groupBox7.SuspendLayout();
             this.SuspendLayout();
             // 
             // keszitButton
@@ -400,11 +403,31 @@
             this.g650CheckBox.Text = "G650";
             this.g650CheckBox.UseVisualStyleBackColor = true;
             // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.m8CheckBox);
+            this.groupBox7.Location = new System.Drawing.Point(125, 229);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(61, 35);
+            this.groupBox7.TabIndex = 35;
+            this.groupBox7.TabStop = false;
+            // 
+            // m8CheckBox
+            // 
+            this.m8CheckBox.AutoSize = true;
+            this.m8CheckBox.Location = new System.Drawing.Point(6, 12);
+            this.m8CheckBox.Name = "m8CheckBox";
+            this.m8CheckBox.Size = new System.Drawing.Size(41, 17);
+            this.m8CheckBox.TabIndex = 0;
+            this.m8CheckBox.Text = "M8";
+            this.m8CheckBox.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(633, 374);
+            this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.kiallasGroupBox);
             this.Controls.Add(this.groupBox5);
@@ -434,6 +457,8 @@
             this.kiallasGroupBox.PerformLayout();
             this.groupBox6.ResumeLayout(false);
             this.groupBox6.PerformLayout();
+            this.groupBox7.ResumeLayout(false);
+            this.groupBox7.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -476,6 +501,8 @@
         private System.Windows.Forms.GroupBox kiallasGroupBox;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.CheckBox g650CheckBox;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.CheckBox m8CheckBox;
     }
 }
 

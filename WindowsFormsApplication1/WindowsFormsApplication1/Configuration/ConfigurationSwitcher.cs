@@ -23,6 +23,7 @@ namespace MPFConverterApp
             configuration.Kiallas = new Kiallas(controls.Kiallas.Checked,
                 controls.KiallasX.Text, controls.KiallasY.Text, controls.KiallasZ.Text);
             configuration.G650Needed = controls.G650.Checked;
+            configuration.M8Needed = controls.M8.Checked;
         }
 
         private void SaveId(NCTConfiguration configuration)
@@ -41,6 +42,7 @@ namespace MPFConverterApp
             ReadControlsForOsztofej(configuration);
             ReadControlsForKiallas(configuration);
             controls.G650.Checked = configuration.G650Needed;
+            controls.M8.Checked = configuration.M8Needed;
         }
 
         private void ReadControlsForOsztofej(NCTConfiguration configuration)

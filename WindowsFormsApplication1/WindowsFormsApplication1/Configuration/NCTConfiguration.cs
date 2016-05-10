@@ -10,6 +10,7 @@
         public bool GQHSHPNeeded { get; set; }
         public Kiallas Kiallas { get; set; }
         public bool G650Needed { get; set; }
+        public bool M8Needed { get; set; }
 
         public NCTConfiguration()
         {

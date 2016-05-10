@@ -15,5 +15,6 @@ namespace MPFConverterApp
         public TextBox KiallasY { get; set; }
         public TextBox KiallasZ { get; set; }
         public CheckBox G650 { get; set; }
+        public CheckBox M8 { get; set; }
     }
 }

@@ -47,6 +47,7 @@ namespace MPFConverterApp
             controls.Osztofej = osztofejBox;
             controls.OsztofejValue = osztofejValueBox;
             controls.G650 = g650CheckBox;
+            controls.M8 = m8CheckBox;
         }
 
         private void setNetworkMachines()
@@ -129,6 +130,8 @@ namespace MPFConverterApp
                 configHandler.GetNCTConfigForSelectedNetwork().Kiallas.Z = zValueBox.Text;
             };
             g650CheckBox.CheckedChanged += (sender, e) => { configHandler.GetNCTConfigForSelectedNetwork().G650Needed = g650CheckBox.Checked; };
+
+            m8CheckBox.CheckedChanged += (sender, e) => { configHandler.GetNCTConfigForSelectedNetwork().M8Needed = m8CheckBox.Checked; };
         }
 
         private void setFormItemsStatus()
@@ -159,6 +162,8 @@ namespace MPFConverterApp
                     + "- nem lehet negatív szám.");
 
             new ToolTip().SetToolTip(this.commentTextBox, "Az azonosító után kerül bele zárójelbe.");
+
+            new ToolTip().SetToolTip(this.m8CheckBox, "Hűtővíz be/kikapcsolása");
         }
 
         private void setKeszitButton()
@@ -173,14 +178,14 @@ namespace MPFConverterApp
 
         private void keszitButton_Click(object sender, EventArgs e)
         {
-            //TODO: check why this is there, and whether this is necessary
+            //TODO: check why this is here, and whether this is necessary
             Osztofej osztofej = new Osztofej(osztofejBox.Checked, osztofejValueBox.Text);
 
             string networkTargetFolder =
                 configHandler.GetNetworkConfigForSelectedNetwork().BaseTargetFolder +
                 configHandler.GetNetworkConfigForSelectedNetwork().TargetFolder.Text;
 
-            Converter converter = new Converter(doneLabel, gqCheckBox);
+            Converter converter = new Converter(doneLabel);
             converter.NCTConfiguration = configHandler.GetNCTConfigForSelectedNetwork();
             converter.ConvertFromMpfToNct(mitTextBox.Text, hovaTextBox.Text);
 

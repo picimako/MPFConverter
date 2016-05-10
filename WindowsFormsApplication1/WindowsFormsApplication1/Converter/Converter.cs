@@ -13,16 +13,14 @@ namespace MPFConverterApp
         private const string M30 = "M30";
 
         private Label doneLabel;
-        private CheckBox gqCheckBox;
         private Logger logger = Logger.Instance;
         private Regex semiColonedRowPattern = new Regex(@"(\w*)(;)(.*)");
 
         public NCTConfiguration NCTConfiguration { get; set; }
 
-        public Converter(Label doneLabel, CheckBox gqCheckBox)
+        public Converter(Label doneLabel)
         {
             this.doneLabel = doneLabel;
-            this.gqCheckBox = gqCheckBox;
         }
 
         public void ConvertFromMpfToNct(string mpfFile, string nctFile)
@@ -50,7 +48,8 @@ namespace MPFConverterApp
                 WriteFileClosing(writer);
                 writer.Close();
 
-                MiddleToFinalNctConverter finalNctConverter = new MiddleToFinalNctConverter(doneLabel, gqCheckBox);
+                MiddleToFinalNctConverter finalNctConverter = new MiddleToFinalNctConverter(doneLabel);
+                finalNctConverter.NCTConfiguration = NCTConfiguration;
                 finalNctConverter.NetworkTargetFolder = @NCTConfiguration.NetworkTargetFolder;
                 finalNctConverter.ConvertMiddleNctToFinalNct(middleNctFile);
             }
@@ -87,7 +86,7 @@ namespace MPFConverterApp
 
         private void WriteGQOn(TextWriter writer)
         {
-            if (gqCheckBox.Checked)
+            if (NCTConfiguration.GQHSHPNeeded)
             {
                 logger.LogComment("GQ kezdőérték: " + Settings.Instance.GQOn);
                 writer.WriteLine(Settings.Instance.GQOn);
@@ -99,7 +98,7 @@ namespace MPFConverterApp
         //Before M30
         private void WriteGQOffAtFileEnd(TextWriter writer, string final)
         {
-            if (gqCheckBox.Checked && M30.Equals(final))
+            if (NCTConfiguration.GQHSHPNeeded && M30.Equals(final))
             {
                 logger.LogComment("GQ záróérték: " + Settings.Instance.GQOff);
                 writer.WriteLine(Settings.Instance.GQOff);

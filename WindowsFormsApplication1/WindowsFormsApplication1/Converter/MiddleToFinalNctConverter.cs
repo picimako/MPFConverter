@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using MPFConverterApp.Configuration;
 
 namespace MPFConverterApp
 {
@@ -12,21 +13,21 @@ namespace MPFConverterApp
         private const string M6 = "M6";
         private const string S = "S";
         private const string G = "G";
+        private const string M8 = "M8";
 
         private int valueOfT;
         private string nextSignToLookFor;
         private bool isPatternCorrect;
 
         private Label doneLabel;
-        private CheckBox gqCheckBox;
         private Logger logger = Logger.Instance;
 
+        public NCTConfiguration NCTConfiguration { get; set; }
         public string NetworkTargetFolder { get; set; }
 
-        public MiddleToFinalNctConverter(Label doneLabel, CheckBox gqCheckBox)
+        public MiddleToFinalNctConverter(Label doneLabel)
         {
             this.doneLabel = doneLabel;
-            this.gqCheckBox = gqCheckBox;
         }
 
         ///<summary>
@@ -109,7 +110,7 @@ namespace MPFConverterApp
 
         private string FinalFilePostFix()
         {
-            return gqCheckBox.Checked ? "_f" : "";
+            return NCTConfiguration.GQHSHPNeeded ? "_f" : "";
         }
 
         private bool IsLineContainLetter(string letter, string line, TextWriter writer)
@@ -123,7 +124,6 @@ namespace MPFConverterApp
             return isPatternCorrect = false;
         }
 
-        //TODO: A G43-as sor után közvetlenül egy M8-at (hűtővíz bekapcsolás) beilleszteni (checkbox-ból választható legyen). Az összes TM6SG előfordulás esetén
         private void WriteValuesAccordingToLineContainsG(string line, TextWriter writer)
         {
             if (line.Contains(G))
@@ -134,6 +134,7 @@ namespace MPFConverterApp
                 line1 = line.Remove(lastIndexOfZ);
                 writer.WriteLine(line1);
                 writer.WriteLine(line2);
+                WriteM8AfterTM6SGPattern(writer);
                 nextSignToLookFor = NEW_PATTERN;
             }
             else
@@ -141,6 +142,15 @@ namespace MPFConverterApp
                 writer.WriteLine(line);
             }
             isPatternCorrect = false;
+        }
+
+        //M8 (hűtővíz bekapcsolás) is needed right after the G43 row. It is applied after each TM6SG match.
+        private void WriteM8AfterTM6SGPattern(TextWriter writer)
+        {
+            if (NCTConfiguration.M8Needed)
+            {
+                writer.WriteLine(M8);
+            }
         }
 
         private void Finalize(string middleNctFile, string newNctFile)
