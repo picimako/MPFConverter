@@ -29,6 +29,7 @@ This application includes a couple of convenient features to modify the final NC
     - *This is currently not working. Will be changed in a later version.*
 - Look for the **T-M6-S-G** pattern in 4 consecutive rows all over the file (even multiple occurences) and apply the following change for each:
     - In the row contaning ```G0``` after the row containing ```S```, find the ```Z``` coordinate and move it to a new line as ```G43 H<the number after T> Z<value of Z>```
+    - Add ```M8``` in a new row after each **T-M6-S-G** pattern
 
 ##### Notes
 
