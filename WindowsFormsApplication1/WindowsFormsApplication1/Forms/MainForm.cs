@@ -178,9 +178,6 @@ namespace MPFConverterApp
 
         private void keszitButton_Click(object sender, EventArgs e)
         {
-            //TODO: check why this is here, and whether this is necessary
-            Osztofej osztofej = new Osztofej(osztofejBox.Checked, osztofejValueBox.Text);
-
             string networkTargetFolder =
                 configHandler.GetNetworkConfigForSelectedNetwork().BaseTargetFolder +
                 configHandler.GetNetworkConfigForSelectedNetwork().TargetFolder.Text;
