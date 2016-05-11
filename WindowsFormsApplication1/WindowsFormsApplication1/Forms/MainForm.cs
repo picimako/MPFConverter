@@ -82,20 +82,20 @@ namespace MPFConverterApp
 
         private void SetEventHandlers()
         {
-            mitTextBox.TextChanged += (sender, e) => { setKeszitButton(); };
+            mitTextBox.TextChanged += (sender, e) => { SetKeszitButton(); };
             idBox.TextChanged += (sender, e) =>
             {
-                setKeszitButton();
+                SetKeszitButton();
                 configHandler.GetNCTConfigForSelectedNetwork().ProgramId = validator.ProgramId;
             };
             osztofejValueBox.TextChanged += (sender, e) =>
             {
-                setKeszitButton();
+                SetKeszitButton();
                 configHandler.GetNCTConfigForSelectedNetwork().Osztofej.Value = osztofejValueBox.Text;
             };
             osztofejBox.CheckedChanged += (sender, e) =>
             {
-                setKeszitButton();
+                SetKeszitButton();
                 osztofejValueBox.Enabled = !osztofejValueBox.Enabled;
                 osztofejValueBox.Text = String.Empty;
                 iNeededCheckbox.Enabled = osztofejBox.Checked;
@@ -109,24 +109,24 @@ namespace MPFConverterApp
 
             kiallasBox.CheckedChanged += (sender, e) =>
             {
-                setKeszitButton();
+                SetKeszitButton();
                 configHandler.GetNCTConfigForSelectedNetwork().Kiallas.Enabled = kiallasBox.Checked;
                 xValueBox.Enabled = yValueBox.Enabled = zValueBox.Enabled = !xValueBox.Enabled;
                 xValueBox.Text = yValueBox.Text = zValueBox.Text = String.Empty;
             };
             xValueBox.TextChanged += (sender, e) =>
             {
-                setKeszitButton();
+                SetKeszitButton();
                 configHandler.GetNCTConfigForSelectedNetwork().Kiallas.X = xValueBox.Text;
             };
             yValueBox.TextChanged += (sender, e) =>
             {
-                setKeszitButton();
+                SetKeszitButton();
                 configHandler.GetNCTConfigForSelectedNetwork().Kiallas.Y = yValueBox.Text;
             };
             zValueBox.TextChanged += (sender, e) =>
             {
-                setKeszitButton();
+                SetKeszitButton();
                 configHandler.GetNCTConfigForSelectedNetwork().Kiallas.Z = zValueBox.Text;
             };
             g650CheckBox.CheckedChanged += (sender, e) => { configHandler.GetNCTConfigForSelectedNetwork().G650Needed = g650CheckBox.Checked; };
@@ -157,7 +157,7 @@ namespace MPFConverterApp
             ToolTipInitializer.SetToolTipForM8CheckBox(m8CheckBox);
         }
 
-        private void setKeszitButton()
+        private void SetKeszitButton()
         {
             keszitButton.Enabled = (
                 validator.IsProgramIdValid()
@@ -177,10 +177,10 @@ namespace MPFConverterApp
             converter.NCTConfiguration = configHandler.GetNCTConfigForSelectedNetwork();
             converter.ConvertFromMpfToNct(mitTextBox.Text, hovaTextBox.Text);
 
-            doAfterCreation();
+            DoAfterCreation();
         }
 
-        private void doAfterCreation()
+        private void DoAfterCreation()
         {
             if (++validator.ProgramId > (Int32)idBox.Maximum)
             {
