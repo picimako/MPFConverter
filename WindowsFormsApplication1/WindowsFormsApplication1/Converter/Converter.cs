@@ -13,6 +13,7 @@ namespace MPFConverterApp
         private const string M30 = "M30";
 
         private Label doneLabel;
+        private TextWriter writer;
         private Logger logger = Logger.Instance;
         private Regex semiColonedRowPattern = new Regex(@"(\w*)(;)(.*)");
 
@@ -32,20 +33,20 @@ namespace MPFConverterApp
             using (StreamReader reader = new StreamReader(mpfFile))
             {
                 string line;
-                TextWriter writer = new StreamWriter(middleNctFile, false);
-                WriteProgramIdAndComment(writer);
-                WriteOsztofejValue(writer);
-                WriteGQOn(writer);
+                writer = new StreamWriter(middleNctFile, false);
+                WriteProgramIdAndComment();
+                WriteOsztofejValue();
+                WriteGQOn();
                 //while ((line = reader.ReadLine()) != null)
                 while (!M30.Equals(line = reader.ReadLine()))
                 {
                     string final = PutSemicolonedPartOfRowsIntoBrackets(line);
-                    WriteGQOffAtFileEnd(writer, final);
-                    WriteXYZ(writer, final);
+                    WriteGQOffAtFileEnd(final);
+                    WriteXYZ(final);
                     writer.WriteLine(final);
                 }
-                WriteG650BeforeM30(writer);
-                WriteFileClosing(writer);
+                WriteG650BeforeM30();
+                WriteFileClosing();
                 writer.Close();
 
                 MiddleToFinalNctConverter finalNctConverter = new MiddleToFinalNctConverter(doneLabel);
@@ -68,13 +69,13 @@ namespace MPFConverterApp
             return final;
         }
 
-        private void WriteProgramIdAndComment(TextWriter writer)
+        private void WriteProgramIdAndComment()
         {
             logger.LogComment("Program azonosító: " + NCTConfiguration.ProgramId);
             writer.WriteLine(String.Format("%O{0} ({1})", NCTConfiguration.ProgramId, NCTConfiguration.Comment));
         }
 
-        private void WriteOsztofejValue(TextWriter writer)
+        private void WriteOsztofejValue()
         {
             Osztofej osztofej = NCTConfiguration.Osztofej;
             if (osztofej.Enabled)
@@ -84,7 +85,7 @@ namespace MPFConverterApp
             }
         }
 
-        private void WriteGQOn(TextWriter writer)
+        private void WriteGQOn()
         {
             if (NCTConfiguration.GQHSHPNeeded)
             {
@@ -96,7 +97,7 @@ namespace MPFConverterApp
         //TODO: this is currently not working. Will be changed in a later version.
         //Np problem if missing because M30 will set this one to default as well.
         //Before M30
-        private void WriteGQOffAtFileEnd(TextWriter writer, string final)
+        private void WriteGQOffAtFileEnd(string final)
         {
             if (NCTConfiguration.GQHSHPNeeded && M30.Equals(final))
             {
@@ -109,7 +110,7 @@ namespace MPFConverterApp
         //Közvetlenül M30 elé.
         //Vagy ez (G0) vagy a G650 kell, hogy bekerüljön
         //Ha az egyiket bepipálom, akkor a másik inaktív legyen
-        private void WriteXYZ(TextWriter writer, string final)
+        private void WriteXYZ(string final)
         {
             Kiallas kiallas = NCTConfiguration.Kiallas;
             if (kiallas.Enabled && M30.Equals(final))
@@ -120,7 +121,7 @@ namespace MPFConverterApp
             }
         }
 
-        private void WriteG650BeforeM30(TextWriter writer)
+        private void WriteG650BeforeM30()
         {
             if (NCTConfiguration.G650Needed)
             {
@@ -128,7 +129,7 @@ namespace MPFConverterApp
             }
         }
 
-        private void WriteFileClosing(TextWriter writer)
+        private void WriteFileClosing()
         {
             writer.WriteLine(M30);
             writer.Write("%");

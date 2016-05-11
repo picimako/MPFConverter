@@ -20,6 +20,7 @@ namespace MPFConverterApp
         private bool isPatternCorrect;
 
         private Label doneLabel;
+        private TextWriter writer;
         private Logger logger = Logger.Instance;
 
         public NCTConfiguration NCTConfiguration { get; set; }
@@ -45,6 +46,8 @@ namespace MPFConverterApp
         ///A G0-s mondatban megkeresni a Z koordinátát. A Zxxx kerüljön új sorba. Az új Z-s sor elejére "G43 H<a T utáni szám>"
         ///"G43 H<a T utáni szám>" után lehet, de nem feltétlen szükségeltetik szóköz a Zxx.xx elé
         ///A T után szerepelhet 2 jegyű szám is.
+        ///
+        /// Az összes minta után új sorba még bekerül egy M8, ha ki van választva a checkbox.
         ///</summary>
         public void ConvertMiddleNctToFinalNct(string middleNctFile)
         {
@@ -59,7 +62,7 @@ namespace MPFConverterApp
                 string line;
                 FolderUtil.CreateDirectoryIfNotExists(NCT_FOLDER);
                 logger.LogComment("A végleges fájl ide kerül létrehozásra: " + finalNctFile);
-                TextWriter writer = new StreamWriter(finalNctFile, false);
+                writer = new StreamWriter(finalNctFile, false);
 
                 while ((line = reader.ReadLine()) != null)
                 {
@@ -85,19 +88,19 @@ namespace MPFConverterApp
                         switch (nextSignToLookFor)
                         {
                             case M6:
-                                if (IsLineContainLetter(M6, line, writer))
+                                if (IsLineContainLetter(M6, line))
                                 {
                                     continue;
                                 }
                                 break;
                             case S:
-                                if (IsLineContainLetter(S, line, writer))
+                                if (IsLineContainLetter(S, line))
                                 {
                                     continue;
                                 }
                                 break;
                             case G:
-                                WriteValuesAccordingToLineContainsG(line, writer);
+                                WriteValuesAccordingToLineContainsG(line);
                                 break;
                         }
                     }
@@ -113,7 +116,7 @@ namespace MPFConverterApp
             return NCTConfiguration.GQHSHPNeeded ? "_f" : "";
         }
 
-        private bool IsLineContainLetter(string letter, string line, TextWriter writer)
+        private bool IsLineContainLetter(string letter, string line)
         {
             writer.WriteLine(line);
             if (line.Contains(letter))
@@ -124,7 +127,7 @@ namespace MPFConverterApp
             return isPatternCorrect = false;
         }
 
-        private void WriteValuesAccordingToLineContainsG(string line, TextWriter writer)
+        private void WriteValuesAccordingToLineContainsG(string line)
         {
             if (line.Contains(G))
             {
@@ -134,7 +137,7 @@ namespace MPFConverterApp
                 line1 = line.Remove(lastIndexOfZ);
                 writer.WriteLine(line1);
                 writer.WriteLine(line2);
-                WriteM8AfterTM6SGPattern(writer);
+                WriteM8AfterTM6SGPattern();
                 nextSignToLookFor = NEW_PATTERN;
             }
             else
@@ -145,7 +148,7 @@ namespace MPFConverterApp
         }
 
         //M8 (hűtővíz bekapcsolás) is needed right after the G43 row. It is applied after each TM6SG match.
-        private void WriteM8AfterTM6SGPattern(TextWriter writer)
+        private void WriteM8AfterTM6SGPattern()
         {
             if (NCTConfiguration.M8Needed)
             {
