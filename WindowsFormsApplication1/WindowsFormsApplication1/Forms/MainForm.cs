@@ -27,7 +27,7 @@ namespace MPFConverterApp
             configSwitcher = new ConfigurationSwitcher(controls);
             setNetworkMachines();
             validator = new FormValidator(controls);
-            setToolTips();
+            SetToolTips();
             setFormItemsStatus();
             setFormItemValues();
             setEventHandlers();
@@ -148,22 +148,13 @@ namespace MPFConverterApp
             idBox.Maximum = 9999;
         }
 
-        private void setToolTips()
+        private void SetToolTips()
         {
-            new ToolTip().SetToolTip(this.gqCheckBox, "Pipa: a nagypontosságú pályakövetés aktív (M30-ig).\nNincs pipa: kikapcsolt állapot.");
-
-            new ToolTip().SetToolTip(this.hovaLabel, "A végeredmény fájl fixen a D:\\NCT\\ mappába fog kerülni.");
-
-            new ToolTip().SetToolTip(this.idBox,
-                "Az azonosító formátuma:\n"
-                    + "- nem kezdődhet 0-val,\n"
-                    + "- pontosan 4 számjegyből kell, hogy álljon,\n"
-                    + "- csak szám szerepelhet benne,\n"
-                    + "- nem lehet negatív szám.");
-
-            new ToolTip().SetToolTip(this.commentTextBox, "Az azonosító után kerül bele zárójelbe.");
-
-            new ToolTip().SetToolTip(this.m8CheckBox, "Hűtővíz be/kikapcsolása");
+            ToolTipInitializer.SetToolTipForGqCheckbox(gqCheckBox);
+            ToolTipInitializer.SetToolTipForHovaLabel(hovaLabel);
+            ToolTipInitializer.SetToolTipForIdBox(idBox);
+            ToolTipInitializer.SetToolTipForCommentTextBox(commentTextBox);
+            ToolTipInitializer.SetToolTipForM8CheckBox(m8CheckBox);
         }
 
         private void setKeszitButton()

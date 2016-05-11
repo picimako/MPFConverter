@@ -62,6 +62,7 @@
     <Compile Include="Converter\MiddleToFinalNctConverter.cs" />
     <Compile Include="Forms\NetworkFolderBrowserDialogFactory.cs" />
     <Compile Include="Forms\NetworkFormControlFactory.cs" />
+    <Compile Include="Forms\ToolTipInitializer.cs" />
     <Compile Include="Util\ControlUtil.cs" />
     <Compile Include="Copy\FileCopier.cs" />
     <Compile Include="Util\FolderUtil.cs" />
