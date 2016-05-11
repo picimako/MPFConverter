@@ -40,10 +40,10 @@ namespace MPFConverterApp
                 //while ((line = reader.ReadLine()) != null)
                 while (!M30.Equals(line = reader.ReadLine()))
                 {
-                    string final = PutSemicolonedPartOfRowsIntoBrackets(line);
-                    WriteGQOffAtFileEnd(final);
-                    WriteXYZ(final);
-                    writer.WriteLine(final);
+                    string semiColonedLine = PutSemicolonedPartOfRowsIntoBrackets(line);
+                    WriteGQOffAtFileEnd(semiColonedLine);
+                    WriteXYZ(semiColonedLine);
+                    writer.WriteLine(semiColonedLine);
                 }
                 WriteG650BeforeM30();
                 WriteFileClosing();
