@@ -22,18 +22,18 @@ namespace MPFConverterApp
             InitializeComponent();
 
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            setUpConfigurationControls();
+            SetUpConfigurationControls();
             configHandler = new ConfigurationHandler();
             configSwitcher = new ConfigurationSwitcher(controls);
-            setNetworkMachines();
+            SetNetworkMachines();
             validator = new FormValidator(controls);
             SetToolTips();
-            setFormItemsStatus();
-            setFormItemValues();
-            setEventHandlers();
+            SetFormItemsStatus();
+            SetFormItemValues();
+            SetEventHandlers();
         }
 
-        private void setUpConfigurationControls()
+        private void SetUpConfigurationControls()
         {
             controls = new ConfigurationControls();
             controls.Comment = commentTextBox;
@@ -50,7 +50,7 @@ namespace MPFConverterApp
             controls.M8 = m8CheckBox;
         }
 
-        private void setNetworkMachines()
+        private void SetNetworkMachines()
         {
             NetworkFormControlFactory factory = new NetworkFormControlFactory(configHandler, configSwitcher);
 
@@ -80,7 +80,7 @@ namespace MPFConverterApp
             }
         }
 
-        private void setEventHandlers()
+        private void SetEventHandlers()
         {
             mitTextBox.TextChanged += (sender, e) => { setKeszitButton(); };
             idBox.TextChanged += (sender, e) =>
@@ -134,14 +134,14 @@ namespace MPFConverterApp
             m8CheckBox.CheckedChanged += (sender, e) => { configHandler.GetNCTConfigForSelectedNetwork().M8Needed = m8CheckBox.Checked; };
         }
 
-        private void setFormItemsStatus()
+        private void SetFormItemsStatus()
         {
             ControlUtil.DisableControls(keszitButton, iNeededCheckbox, hovaTextBox, osztofejValueBox, xValueBox, yValueBox, zValueBox);
             doneLabel.Visible = false;
             configHandler.Configurations.First().Key.RadioButton.Checked = true;
         }
 
-        private void setFormItemValues()
+        private void SetFormItemValues()
         {
             doneLabel.Text = "Az NCT fájl készítése véget ért.";
             idBox.Minimum = 1000;
