@@ -43,15 +43,15 @@
             this.osztofejValueBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.idBox = new System.Windows.Forms.NumericUpDown();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.networkMachinesGroupBox = new System.Windows.Forms.GroupBox();
             this.networkPlacesGroupBoxLabel = new System.Windows.Forms.Label();
             this.networkFolderBrowseButton = new System.Windows.Forms.Button();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.networkMachineNamesGroupBox = new System.Windows.Forms.GroupBox();
             this.openLogFileButton = new System.Windows.Forms.Button();
             this.iNeededCheckbox = new System.Windows.Forms.CheckBox();
             this.gqCheckBox = new System.Windows.Forms.CheckBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.hshpGroupBox = new System.Windows.Forms.GroupBox();
+            this.osztoFejGroupBox = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.kiallasBox = new System.Windows.Forms.CheckBox();
             this.zValueLabel = new System.Windows.Forms.Label();
@@ -61,18 +61,18 @@
             this.zValueBox = new System.Windows.Forms.TextBox();
             this.yValueBox = new System.Windows.Forms.TextBox();
             this.kiallasGroupBox = new System.Windows.Forms.GroupBox();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.g650GroupBox = new System.Windows.Forms.GroupBox();
             this.g650CheckBox = new System.Windows.Forms.CheckBox();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.m8GroupBox = new System.Windows.Forms.GroupBox();
             this.m8CheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.idBox)).BeginInit();
-            this.groupBox1.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox4.SuspendLayout();
+            this.networkMachinesGroupBox.SuspendLayout();
+            this.hshpGroupBox.SuspendLayout();
+            this.osztoFejGroupBox.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.kiallasGroupBox.SuspendLayout();
-            this.groupBox6.SuspendLayout();
-            this.groupBox7.SuspendLayout();
+            this.g650GroupBox.SuspendLayout();
+            this.m8GroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // keszitButton
@@ -206,17 +206,17 @@
             this.idBox.Size = new System.Drawing.Size(61, 20);
             this.idBox.TabIndex = 19;
             // 
-            // groupBox1
+            // networkMachinesGroupBox
             // 
-            this.groupBox1.Controls.Add(this.networkPlacesGroupBoxLabel);
-            this.groupBox1.Controls.Add(this.networkFolderBrowseButton);
-            this.groupBox1.Controls.Add(this.groupBox2);
-            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.groupBox1.Location = new System.Drawing.Point(12, 265);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(609, 100);
-            this.groupBox1.TabIndex = 20;
-            this.groupBox1.TabStop = false;
+            this.networkMachinesGroupBox.Controls.Add(this.networkPlacesGroupBoxLabel);
+            this.networkMachinesGroupBox.Controls.Add(this.networkFolderBrowseButton);
+            this.networkMachinesGroupBox.Controls.Add(this.networkMachineNamesGroupBox);
+            this.networkMachinesGroupBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.networkMachinesGroupBox.Location = new System.Drawing.Point(12, 265);
+            this.networkMachinesGroupBox.Name = "networkMachinesGroupBox";
+            this.networkMachinesGroupBox.Size = new System.Drawing.Size(609, 100);
+            this.networkMachinesGroupBox.TabIndex = 20;
+            this.networkMachinesGroupBox.TabStop = false;
             // 
             // networkPlacesGroupBoxLabel
             // 
@@ -238,14 +238,14 @@
             this.networkFolderBrowseButton.UseVisualStyleBackColor = true;
             this.networkFolderBrowseButton.Click += new System.EventHandler(this.networkFolderBrowseButton_Click);
             // 
-            // groupBox2
+            // networkMachineNamesGroupBox
             // 
-            this.groupBox2.Location = new System.Drawing.Point(16, 15);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(108, 74);
-            this.groupBox2.TabIndex = 0;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Gépek";
+            this.networkMachineNamesGroupBox.Location = new System.Drawing.Point(16, 15);
+            this.networkMachineNamesGroupBox.Name = "networkMachineNamesGroupBox";
+            this.networkMachineNamesGroupBox.Size = new System.Drawing.Size(108, 74);
+            this.networkMachineNamesGroupBox.TabIndex = 0;
+            this.networkMachineNamesGroupBox.TabStop = false;
+            this.networkMachineNamesGroupBox.Text = "Gépek";
             // 
             // openLogFileButton
             // 
@@ -277,26 +277,26 @@
             this.gqCheckBox.Text = "HSHP";
             this.gqCheckBox.UseVisualStyleBackColor = true;
             // 
-            // groupBox3
+            // hshpGroupBox
             // 
-            this.groupBox3.Controls.Add(this.gqCheckBox);
-            this.groupBox3.Location = new System.Drawing.Point(33, 114);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(63, 35);
-            this.groupBox3.TabIndex = 23;
-            this.groupBox3.TabStop = false;
+            this.hshpGroupBox.Controls.Add(this.gqCheckBox);
+            this.hshpGroupBox.Location = new System.Drawing.Point(33, 114);
+            this.hshpGroupBox.Name = "hshpGroupBox";
+            this.hshpGroupBox.Size = new System.Drawing.Size(63, 35);
+            this.hshpGroupBox.TabIndex = 23;
+            this.hshpGroupBox.TabStop = false;
             // 
-            // groupBox4
+            // osztoFejGroupBox
             // 
-            this.groupBox4.Controls.Add(this.label4);
-            this.groupBox4.Controls.Add(this.iNeededCheckbox);
-            this.groupBox4.Controls.Add(this.osztofejValueBox);
-            this.groupBox4.Controls.Add(this.osztofejBox);
-            this.groupBox4.Location = new System.Drawing.Point(33, 151);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(235, 41);
-            this.groupBox4.TabIndex = 24;
-            this.groupBox4.TabStop = false;
+            this.osztoFejGroupBox.Controls.Add(this.label4);
+            this.osztoFejGroupBox.Controls.Add(this.iNeededCheckbox);
+            this.osztoFejGroupBox.Controls.Add(this.osztofejValueBox);
+            this.osztoFejGroupBox.Controls.Add(this.osztofejBox);
+            this.osztoFejGroupBox.Location = new System.Drawing.Point(33, 151);
+            this.osztoFejGroupBox.Name = "osztoFejGroupBox";
+            this.osztoFejGroupBox.Size = new System.Drawing.Size(235, 41);
+            this.osztoFejGroupBox.TabIndex = 24;
+            this.osztoFejGroupBox.TabStop = false;
             // 
             // groupBox5
             // 
@@ -384,14 +384,14 @@
             this.kiallasGroupBox.TabIndex = 33;
             this.kiallasGroupBox.TabStop = false;
             // 
-            // groupBox6
+            // g650GroupBox
             // 
-            this.groupBox6.Controls.Add(this.g650CheckBox);
-            this.groupBox6.Location = new System.Drawing.Point(33, 229);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(85, 35);
-            this.groupBox6.TabIndex = 34;
-            this.groupBox6.TabStop = false;
+            this.g650GroupBox.Controls.Add(this.g650CheckBox);
+            this.g650GroupBox.Location = new System.Drawing.Point(33, 229);
+            this.g650GroupBox.Name = "g650GroupBox";
+            this.g650GroupBox.Size = new System.Drawing.Size(85, 35);
+            this.g650GroupBox.TabIndex = 34;
+            this.g650GroupBox.TabStop = false;
             // 
             // g650CheckBox
             // 
@@ -403,14 +403,14 @@
             this.g650CheckBox.Text = "G650";
             this.g650CheckBox.UseVisualStyleBackColor = true;
             // 
-            // groupBox7
+            // m8GroupBox
             // 
-            this.groupBox7.Controls.Add(this.m8CheckBox);
-            this.groupBox7.Location = new System.Drawing.Point(125, 229);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(61, 35);
-            this.groupBox7.TabIndex = 35;
-            this.groupBox7.TabStop = false;
+            this.m8GroupBox.Controls.Add(this.m8CheckBox);
+            this.m8GroupBox.Location = new System.Drawing.Point(125, 229);
+            this.m8GroupBox.Name = "m8GroupBox";
+            this.m8GroupBox.Size = new System.Drawing.Size(61, 35);
+            this.m8GroupBox.TabIndex = 35;
+            this.m8GroupBox.TabStop = false;
             // 
             // m8CheckBox
             // 
@@ -427,14 +427,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(633, 374);
-            this.Controls.Add(this.groupBox7);
-            this.Controls.Add(this.groupBox6);
+            this.Controls.Add(this.m8GroupBox);
+            this.Controls.Add(this.g650GroupBox);
             this.Controls.Add(this.kiallasGroupBox);
             this.Controls.Add(this.groupBox5);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
+            this.Controls.Add(this.osztoFejGroupBox);
+            this.Controls.Add(this.hshpGroupBox);
             this.Controls.Add(this.openLogFileButton);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.networkMachinesGroupBox);
             this.Controls.Add(this.doneLabel);
             this.Controls.Add(this.tallozButton);
             this.Controls.Add(this.hovaLabel);
@@ -445,20 +445,20 @@
             this.Name = "MainForm";
             this.Text = "Fájlgeneráló";
             ((System.ComponentModel.ISupportInitialize)(this.idBox)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
+            this.networkMachinesGroupBox.ResumeLayout(false);
+            this.networkMachinesGroupBox.PerformLayout();
+            this.hshpGroupBox.ResumeLayout(false);
+            this.hshpGroupBox.PerformLayout();
+            this.osztoFejGroupBox.ResumeLayout(false);
+            this.osztoFejGroupBox.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.kiallasGroupBox.ResumeLayout(false);
             this.kiallasGroupBox.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
+            this.g650GroupBox.ResumeLayout(false);
+            this.g650GroupBox.PerformLayout();
+            this.m8GroupBox.ResumeLayout(false);
+            this.m8GroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -481,15 +481,15 @@
         private System.Windows.Forms.TextBox osztofejValueBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown idBox;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox networkMachinesGroupBox;
         private System.Windows.Forms.Button networkFolderBrowseButton;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox networkMachineNamesGroupBox;
         private System.Windows.Forms.Label networkPlacesGroupBoxLabel;
         private System.Windows.Forms.Button openLogFileButton;
         private System.Windows.Forms.CheckBox iNeededCheckbox;
         private System.Windows.Forms.CheckBox gqCheckBox;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox hshpGroupBox;
+        private System.Windows.Forms.GroupBox osztoFejGroupBox;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.CheckBox kiallasBox;
         private System.Windows.Forms.Label zValueLabel;
@@ -499,9 +499,9 @@
         private System.Windows.Forms.TextBox zValueBox;
         private System.Windows.Forms.TextBox yValueBox;
         private System.Windows.Forms.GroupBox kiallasGroupBox;
-        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.GroupBox g650GroupBox;
         private System.Windows.Forms.CheckBox g650CheckBox;
-        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.GroupBox m8GroupBox;
         private System.Windows.Forms.CheckBox m8CheckBox;
     }
 }

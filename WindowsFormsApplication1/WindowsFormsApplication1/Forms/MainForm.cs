@@ -68,12 +68,12 @@ namespace MPFConverterApp
                 if (currentFolder > 1)
                 {
                     this.Height += NETWORK_FOLDER_HEIGHT;
-                    groupBox1.Height += NETWORK_FOLDER_HEIGHT;
-                    groupBox2.Height += NETWORK_FOLDER_HEIGHT;
+                    networkMachinesGroupBox.Height += NETWORK_FOLDER_HEIGHT;
+                    networkMachineNamesGroupBox.Height += NETWORK_FOLDER_HEIGHT;
                 }
-                groupBox2.Controls.Add(radioButton);
-                groupBox1.Controls.Add(baseTargetFolder);
-                groupBox1.Controls.Add(targetFolder);
+                networkMachineNamesGroupBox.Controls.Add(radioButton);
+                networkMachinesGroupBox.Controls.Add(baseTargetFolder);
+                networkMachinesGroupBox.Controls.Add(targetFolder);
                 configHandler.Configurations.Add(
                     new NetworkMachineConfiguration(radioButton, baseTargetFolder, targetFolder),
                     new NCTConfiguration());
