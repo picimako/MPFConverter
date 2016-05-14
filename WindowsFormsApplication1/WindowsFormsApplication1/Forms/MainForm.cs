@@ -113,6 +113,7 @@ namespace MPFConverterApp
                 configHandler.GetNCTConfigForSelectedNetwork().Kiallas.Enabled = kiallasBox.Checked;
                 xValueBox.Enabled = yValueBox.Enabled = zValueBox.Enabled = !xValueBox.Enabled;
                 xValueBox.Text = yValueBox.Text = zValueBox.Text = String.Empty;
+                g650CheckBox.Enabled = !kiallasBox.Checked;
             };
             xValueBox.TextChanged += (sender, e) =>
             {
@@ -129,7 +130,11 @@ namespace MPFConverterApp
                 SetKeszitButton();
                 configHandler.GetNCTConfigForSelectedNetwork().Kiallas.Z = zValueBox.Text;
             };
-            g650CheckBox.CheckedChanged += (sender, e) => { configHandler.GetNCTConfigForSelectedNetwork().G650Needed = g650CheckBox.Checked; };
+            g650CheckBox.CheckedChanged += (sender, e) => 
+            {
+                configHandler.GetNCTConfigForSelectedNetwork().G650Needed = g650CheckBox.Checked;
+                kiallasBox.Enabled = !g650CheckBox.Checked;
+            };
 
             m8CheckBox.CheckedChanged += (sender, e) => { configHandler.GetNCTConfigForSelectedNetwork().M8Needed = m8CheckBox.Checked; };
         }

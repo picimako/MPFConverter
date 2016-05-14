@@ -37,15 +37,13 @@ namespace MPFConverterApp
                 WriteProgramIdAndComment();
                 WriteOsztofejValue();
                 WriteGQOn();
-                //while ((line = reader.ReadLine()) != null)
                 while (!M30.Equals(line = reader.ReadLine()))
                 {
                     string semiColonedLine = PutSemicolonedPartOfRowsIntoBrackets(line);
-                    WriteGQOffAtFileEnd(semiColonedLine);
-                    WriteXYZ(semiColonedLine);
+                    //WriteGQOffAtFileEnd(semiColonedLine);
                     writer.WriteLine(semiColonedLine);
                 }
-                WriteG650BeforeM30();
+                WriteG0XYZOrG650();
                 WriteFileClosing();
                 writer.Close();
 
@@ -97,40 +95,35 @@ namespace MPFConverterApp
         //TODO: this is currently not working. Will be changed in a later version.
         //Np problem if missing because M30 will set this one to default as well.
         //Before M30
-        private void WriteGQOffAtFileEnd(string final)
-        {
-            if (NCTConfiguration.GQHSHPNeeded && M30.Equals(final))
-            {
-                logger.LogComment("GQ záróérték: " + Settings.Instance.GQOff);
-                writer.WriteLine(Settings.Instance.GQOff);
-            }
-        }
+        //private void WriteGQOffAtFileEnd(string final)
+        //{
+        //    if (NCTConfiguration.GQHSHPNeeded && M30.Equals(final))
+        //    {
+        //        logger.LogComment("GQ záróérték: " + Settings.Instance.GQOff);
+        //        writer.WriteLine(Settings.Instance.GQOff);
+        //    }
+        //}
 
-        //TODO: this is currently not working. Beszélni Apával.
-        //Közvetlenül M30 elé.
-        //Vagy ez (G0) vagy a G650 kell, hogy bekerüljön
-        //Ha az egyiket bepipálom, akkor a másik inaktív legyen
-        private void WriteXYZ(string final)
+        //Közvetlenül M30 elé kell, hogy a G0 vagy a G650 bejerüljön.
+        private void WriteG0XYZOrG650()
         {
-            Kiallas kiallas = NCTConfiguration.Kiallas;
-            if (kiallas.Enabled && M30.Equals(final))
+            if (NCTConfiguration.Kiallas.Enabled)
             {
+                Kiallas kiallas = NCTConfiguration.Kiallas;
                 logger.LogComment(String.Format("XYZ értékek - X: {0}, Y: {1}, Z: {2}", kiallas.X, kiallas.Y, kiallas.Z));
                 writer.WriteLine(String.Format("G0 Z{0}", kiallas.Z));
                 writer.WriteLine(String.Format("G0 X{0} Y{1}", kiallas.X, kiallas.Y));
             }
-        }
-
-        private void WriteG650BeforeM30()
-        {
-            if (NCTConfiguration.G650Needed)
+            else if (NCTConfiguration.G650Needed)
             {
+                logger.LogComment("G650 kiírása.");
                 writer.WriteLine(G650VALUE);
             }
         }
 
         private void WriteFileClosing()
         {
+            logger.LogComment("M30 és a fájl végi % jel kiírása.");
             writer.WriteLine(M30);
             writer.Write("%");
         }
