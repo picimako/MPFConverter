@@ -135,6 +135,8 @@ namespace MPFConverterApp
                 string line1, line2;
                 line2 = String.Format("G43 H{0} {1}", valueOfT, line.Substring(lastIndexOfZ));
                 line1 = line.Remove(lastIndexOfZ);
+                logger.LogComment("T-M6-S-G minta észlelve.");
+                logger.LogComment(line1 + " és " + line2 + " kiírása.");
                 writer.WriteLine(line1);
                 writer.WriteLine(line2);
                 WriteM8AfterTM6SGPattern();
@@ -152,6 +154,7 @@ namespace MPFConverterApp
         {
             if (NCTConfiguration.M8Needed)
             {
+                logger.LogComment("M8 kiírása.");
                 writer.WriteLine(M8);
             }
         }

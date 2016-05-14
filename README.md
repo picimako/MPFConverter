@@ -37,6 +37,4 @@ This application includes a couple of convenient features to modify the final NC
 
 # Further improvements
 
-- Simplify converter logic
-- Add logging for conversion from middle nct to final nct
 - Mark UI controls that contain incorrect value
