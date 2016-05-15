@@ -34,7 +34,3 @@ This application includes a couple of convenient features to modify the final NC
 ##### Notes
 
 - ```G...Q...``` values are defined in the first row of ```settings.txt``` in **[ON]#[OFF]** pattern
-
-# Further improvements
-
-- Mark UI controls that contain incorrect value
