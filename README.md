@@ -10,7 +10,6 @@ This application includes a couple of convenient features to modify the final NC
 - Select the MPF file to convert.
 - Set values to include or not include in the final NCT file
 - Strong validation of fields not to mess up the result
-- Open log file of conversion.
 - Autoincrement **programId** after a conversion is done
 
 ### Conversion

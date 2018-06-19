@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Linq;
 using System.Windows.Forms;
 using System.IO;
 using MPFConverterApp.Forms;
-using MPFConverterApp.Util;
-using MPFConverterApp.Configuration;
 
 namespace MPFConverterApp
 {
@@ -148,11 +145,6 @@ namespace MPFConverterApp
                 mitTextBox.Text = tallozDialog.FileName;
                 hovaTextBox.Text = @"D:\NCT\" + Path.GetFileNameWithoutExtension(tallozDialog.FileName) + ".nct";
             }
-        }
-
-        private void openLogFileButton_Click(object sender, EventArgs e)
-        {
-            FileOpener.OpenLogFile();
         }
     }
 }

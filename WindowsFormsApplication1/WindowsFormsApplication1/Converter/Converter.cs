@@ -14,7 +14,6 @@ namespace MPFConverterApp
 
         private Label doneLabel;
         private TextWriter writer;
-        private Logger logger = Logger.Instance;
         private Regex semiColonedRowPattern = new Regex(@"(\w*)(;)(.*)");
 
         public NCTConfiguration NCTConfiguration { get; set; }
@@ -26,7 +25,6 @@ namespace MPFConverterApp
 
         public void ConvertFromMpfToNct(string mpfFile, string nctFile)
         {
-            logger.Open();
             FolderUtil.CreateDirectoryIfNotExists(MPF_FOLDER);
             string middleNctFile = MPF_FOLDER + Path.GetFileName(nctFile);
 
@@ -59,16 +57,13 @@ namespace MPFConverterApp
             Match match = semiColonedRowPattern.Match(line);
             if (match.Success)
             {
-                logger.LogComment("Aktuális sor zárójelezése: " + line);
                 final = String.Format("{0}{1}", match.Groups[1], "(" + match.Groups[3] + ")");
-                logger.LogComment("Aktuális sor zárójelekkel: " + final);
             }
             return final;
         }
 
         private void WriteProgramIdAndComment()
         {
-            logger.LogComment("Program azonosító: " + NCTConfiguration.ProgramId);
             writer.WriteLine(String.Format("%O{0} ({1})", NCTConfiguration.ProgramId, NCTConfiguration.Comment));
         }
 
@@ -77,7 +72,6 @@ namespace MPFConverterApp
             Osztofej osztofej = NCTConfiguration.Osztofej;
             if (osztofej.Enabled)
             {
-                logger.LogComment("Osztófej érték: A" + osztofej.Value);
                 writer.WriteLine(String.Format("A{0}{1}", NCTConfiguration.INeeded ? "I" : "", osztofej.Value));
             }
         }
@@ -86,7 +80,6 @@ namespace MPFConverterApp
         {
             if (NCTConfiguration.GQHSHPNeeded)
             {
-                logger.LogComment("GQ kezdőérték: " + Settings.Instance.GQOn);
                 writer.WriteLine(Settings.Instance.GQOn);
             }
         }
@@ -98,7 +91,6 @@ namespace MPFConverterApp
         //{
         //    if (NCTConfiguration.GQHSHPNeeded && M30.Equals(final))
         //    {
-        //        logger.LogComment("GQ záróérték: " + Settings.Instance.GQOff);
         //        writer.WriteLine(Settings.Instance.GQOff);
         //    }
         //}
@@ -109,20 +101,17 @@ namespace MPFConverterApp
             if (NCTConfiguration.Kiallas.Enabled)
             {
                 Kiallas kiallas = NCTConfiguration.Kiallas;
-                logger.LogComment(String.Format("XYZ értékek - X: {0}, Y: {1}, Z: {2}", kiallas.X, kiallas.Y, kiallas.Z));
                 writer.WriteLine(String.Format("G0 Z{0}", kiallas.Z));
                 writer.WriteLine(String.Format("G0 X{0} Y{1}", kiallas.X, kiallas.Y));
             }
             else if (NCTConfiguration.G650Needed)
             {
-                logger.LogComment("G650 kiírása.");
                 writer.WriteLine(G650VALUE);
             }
         }
 
         private void WriteFileClosing()
         {
-            logger.LogComment("M30 és a fájl végi % jel kiírása.");
             writer.WriteLine(M30);
             writer.Write("%");
         }

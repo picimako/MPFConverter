@@ -61,10 +61,8 @@
     <Compile Include="Forms\ToolTipInitializer.cs" />
     <Compile Include="Util\ControlUtil.cs" />
     <Compile Include="Util\FolderUtil.cs" />
-    <Compile Include="Util\FileOpener.cs" />
     <Compile Include="Validator\FormValidator.cs" />
     <Compile Include="Property\Kiallas.cs" />
-    <Compile Include="Logger\Logger.cs" />
     <Compile Include="Configuration\NCTConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationControls.cs" />
     <Compile Include="Configuration\ConfigurationSwitcher.cs" />

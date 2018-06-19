@@ -43,7 +43,6 @@
             this.osztofejValueBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.idBox = new System.Windows.Forms.NumericUpDown();
-            this.openLogFileButton = new System.Windows.Forms.Button();
             this.iNeededCheckbox = new System.Windows.Forms.CheckBox();
             this.gqCheckBox = new System.Windows.Forms.CheckBox();
             this.hshpGroupBox = new System.Windows.Forms.GroupBox();
@@ -200,16 +199,6 @@
             this.idBox.Name = "idBox";
             this.idBox.Size = new System.Drawing.Size(61, 20);
             this.idBox.TabIndex = 19;
-            // 
-            // openLogFileButton
-            // 
-            this.openLogFileButton.Location = new System.Drawing.Point(500, 199);
-            this.openLogFileButton.Name = "openLogFileButton";
-            this.openLogFileButton.Size = new System.Drawing.Size(121, 27);
-            this.openLogFileButton.TabIndex = 21;
-            this.openLogFileButton.Text = "Naplófájl megnyitása";
-            this.openLogFileButton.UseVisualStyleBackColor = true;
-            this.openLogFileButton.Click += new System.EventHandler(this.openLogFileButton_Click);
             // 
             // iNeededCheckbox
             // 
@@ -387,7 +376,6 @@
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.osztoFejGroupBox);
             this.Controls.Add(this.hshpGroupBox);
-            this.Controls.Add(this.openLogFileButton);
             this.Controls.Add(this.doneLabel);
             this.Controls.Add(this.tallozButton);
             this.Controls.Add(this.hovaLabel);
@@ -432,7 +420,6 @@
         private System.Windows.Forms.TextBox osztofejValueBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown idBox;
-        private System.Windows.Forms.Button openLogFileButton;
         private System.Windows.Forms.CheckBox iNeededCheckbox;
         private System.Windows.Forms.CheckBox gqCheckBox;
         private System.Windows.Forms.GroupBox hshpGroupBox;
