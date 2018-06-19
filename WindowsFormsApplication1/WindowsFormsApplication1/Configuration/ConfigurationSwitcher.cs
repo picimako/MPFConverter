@@ -12,14 +12,13 @@ namespace MPFConverterApp
             controls = NCTConfigControls;
         }
 
-        public void SaveConfigTo(NCTConfiguration configuration, string networkTargetFolder)
+        public void SaveConfigTo(NCTConfiguration configuration)
         {
             configuration.Comment = controls.Comment.Text;
             configuration.GQHSHPNeeded = controls.GQ.Checked;
             configuration.INeeded = controls.INeeded.Checked;
             configuration.Osztofej = new Osztofej(controls.Osztofej.Checked, controls.OsztofejValue.Text);
             SaveId(configuration);
-            configuration.NetworkTargetFolder = networkTargetFolder;
             configuration.Kiallas = new Kiallas(controls.Kiallas.Checked,
                 controls.KiallasX.Text, controls.KiallasY.Text, controls.KiallasZ.Text);
             configuration.G650Needed = controls.G650.Checked;

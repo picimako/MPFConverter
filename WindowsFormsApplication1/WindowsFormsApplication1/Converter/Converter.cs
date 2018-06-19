@@ -49,7 +49,6 @@ namespace MPFConverterApp
 
                 MiddleToFinalNctConverter finalNctConverter = new MiddleToFinalNctConverter(doneLabel);
                 finalNctConverter.NCTConfiguration = NCTConfiguration;
-                finalNctConverter.NetworkTargetFolder = @NCTConfiguration.NetworkTargetFolder;
                 finalNctConverter.ConvertMiddleNctToFinalNct(middleNctFile);
             }
         }

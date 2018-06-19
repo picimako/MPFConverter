@@ -5,7 +5,6 @@
         public int ProgramId { get; set; }
         public string Comment { get; set; }
         public Osztofej Osztofej { get; set; }
-        public string NetworkTargetFolder { get; set; }
         public bool INeeded { get; set; }
         public bool GQHSHPNeeded { get; set; }
         public Kiallas Kiallas { get; set; }
@@ -22,7 +21,6 @@
             ProgramId = programId;
             Comment = comment;
             Osztofej = osztofej;
-            NetworkTargetFolder = string.Empty;
             INeeded = iNeeded;
             GQHSHPNeeded = gqHshpNeeded;
             Kiallas = kiallas;

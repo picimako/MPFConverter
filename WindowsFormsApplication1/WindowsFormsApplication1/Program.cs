@@ -21,12 +21,6 @@ namespace MPFConverterApp
                     string line = reader.ReadLine();
                     Settings.Instance.GQOn = Split(line)[0];
                     Settings.Instance.GQOff = Split(line)[1];
-
-                    while ((line = reader.ReadLine()) != null)
-                    {
-                        string[] lineElements = Split(line);
-                        Settings.Instance.MachineBaseTargetFolders.Add(new KeyValuePair<string ,string>(lineElements[0], lineElements[1]));
-                    }
                 }
                 Settings.Instance.ApplicationStartupPath = Application.StartupPath;
             }

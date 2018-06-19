@@ -43,10 +43,6 @@
             this.osztofejValueBox = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.idBox = new System.Windows.Forms.NumericUpDown();
-            this.networkMachinesGroupBox = new System.Windows.Forms.GroupBox();
-            this.networkPlacesGroupBoxLabel = new System.Windows.Forms.Label();
-            this.networkFolderBrowseButton = new System.Windows.Forms.Button();
-            this.networkMachineNamesGroupBox = new System.Windows.Forms.GroupBox();
             this.openLogFileButton = new System.Windows.Forms.Button();
             this.iNeededCheckbox = new System.Windows.Forms.CheckBox();
             this.gqCheckBox = new System.Windows.Forms.CheckBox();
@@ -66,7 +62,6 @@
             this.m8GroupBox = new System.Windows.Forms.GroupBox();
             this.m8CheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.idBox)).BeginInit();
-            this.networkMachinesGroupBox.SuspendLayout();
             this.hshpGroupBox.SuspendLayout();
             this.osztoFejGroupBox.SuspendLayout();
             this.groupBox5.SuspendLayout();
@@ -205,47 +200,6 @@
             this.idBox.Name = "idBox";
             this.idBox.Size = new System.Drawing.Size(61, 20);
             this.idBox.TabIndex = 19;
-            // 
-            // networkMachinesGroupBox
-            // 
-            this.networkMachinesGroupBox.Controls.Add(this.networkPlacesGroupBoxLabel);
-            this.networkMachinesGroupBox.Controls.Add(this.networkFolderBrowseButton);
-            this.networkMachinesGroupBox.Controls.Add(this.networkMachineNamesGroupBox);
-            this.networkMachinesGroupBox.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.networkMachinesGroupBox.Location = new System.Drawing.Point(12, 265);
-            this.networkMachinesGroupBox.Name = "networkMachinesGroupBox";
-            this.networkMachinesGroupBox.Size = new System.Drawing.Size(609, 100);
-            this.networkMachinesGroupBox.TabIndex = 20;
-            this.networkMachinesGroupBox.TabStop = false;
-            // 
-            // networkPlacesGroupBoxLabel
-            // 
-            this.networkPlacesGroupBoxLabel.AutoSize = true;
-            this.networkPlacesGroupBoxLabel.ForeColor = System.Drawing.Color.Blue;
-            this.networkPlacesGroupBoxLabel.Location = new System.Drawing.Point(464, 15);
-            this.networkPlacesGroupBoxLabel.Name = "networkPlacesGroupBoxLabel";
-            this.networkPlacesGroupBoxLabel.Size = new System.Drawing.Size(79, 13);
-            this.networkPlacesGroupBoxLabel.TabIndex = 6;
-            this.networkPlacesGroupBoxLabel.Text = "Hálózati helyek";
-            // 
-            // networkFolderBrowseButton
-            // 
-            this.networkFolderBrowseButton.Location = new System.Drawing.Point(399, 34);
-            this.networkFolderBrowseButton.Name = "networkFolderBrowseButton";
-            this.networkFolderBrowseButton.Size = new System.Drawing.Size(204, 55);
-            this.networkFolderBrowseButton.TabIndex = 5;
-            this.networkFolderBrowseButton.Text = "Tallózás...";
-            this.networkFolderBrowseButton.UseVisualStyleBackColor = true;
-            this.networkFolderBrowseButton.Click += new System.EventHandler(this.networkFolderBrowseButton_Click);
-            // 
-            // networkMachineNamesGroupBox
-            // 
-            this.networkMachineNamesGroupBox.Location = new System.Drawing.Point(16, 15);
-            this.networkMachineNamesGroupBox.Name = "networkMachineNamesGroupBox";
-            this.networkMachineNamesGroupBox.Size = new System.Drawing.Size(108, 74);
-            this.networkMachineNamesGroupBox.TabIndex = 0;
-            this.networkMachineNamesGroupBox.TabStop = false;
-            this.networkMachineNamesGroupBox.Text = "Gépek";
             // 
             // openLogFileButton
             // 
@@ -426,7 +380,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(633, 374);
+            this.ClientSize = new System.Drawing.Size(633, 277);
             this.Controls.Add(this.m8GroupBox);
             this.Controls.Add(this.g650GroupBox);
             this.Controls.Add(this.kiallasGroupBox);
@@ -434,7 +388,6 @@
             this.Controls.Add(this.osztoFejGroupBox);
             this.Controls.Add(this.hshpGroupBox);
             this.Controls.Add(this.openLogFileButton);
-            this.Controls.Add(this.networkMachinesGroupBox);
             this.Controls.Add(this.doneLabel);
             this.Controls.Add(this.tallozButton);
             this.Controls.Add(this.hovaLabel);
@@ -445,8 +398,6 @@
             this.Name = "MainForm";
             this.Text = "Fájlgeneráló";
             ((System.ComponentModel.ISupportInitialize)(this.idBox)).EndInit();
-            this.networkMachinesGroupBox.ResumeLayout(false);
-            this.networkMachinesGroupBox.PerformLayout();
             this.hshpGroupBox.ResumeLayout(false);
             this.hshpGroupBox.PerformLayout();
             this.osztoFejGroupBox.ResumeLayout(false);
@@ -481,10 +432,6 @@
         private System.Windows.Forms.TextBox osztofejValueBox;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.NumericUpDown idBox;
-        private System.Windows.Forms.GroupBox networkMachinesGroupBox;
-        private System.Windows.Forms.Button networkFolderBrowseButton;
-        private System.Windows.Forms.GroupBox networkMachineNamesGroupBox;
-        private System.Windows.Forms.Label networkPlacesGroupBoxLabel;
         private System.Windows.Forms.Button openLogFileButton;
         private System.Windows.Forms.CheckBox iNeededCheckbox;
         private System.Windows.Forms.CheckBox gqCheckBox;

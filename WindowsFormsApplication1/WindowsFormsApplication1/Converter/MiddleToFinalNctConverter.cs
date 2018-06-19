@@ -24,7 +24,6 @@ namespace MPFConverterApp
         private Logger logger = Logger.Instance;
 
         public NCTConfiguration NCTConfiguration { get; set; }
-        public string NetworkTargetFolder { get; set; }
 
         public MiddleToFinalNctConverter(Label doneLabel)
         {
@@ -163,7 +162,6 @@ namespace MPFConverterApp
         {
             logger.LogComment("Köztes fájl törlése.");
             File.Delete(middleNctFile);
-            FileCopier.CopyNCTFileToNetworkFolder(NetworkTargetFolder, newNctFile);
             logger.Close();
         }
     }
